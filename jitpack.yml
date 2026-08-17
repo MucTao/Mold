@@ -4,5 +4,8 @@ before_install:
   - unzip gradle-9.6.1-bin.zip
   - export GRADLE_HOME=$PWD/gradle-9.6.1
   - export PATH=$GRADLE_HOME/bin:$PATH
+  - echo "Cleaning Gradle cache"
+  - rm -rf ~/.gradle/caches/modules-2/files-2.1/
+  - mkdir -p ~/.gradle/caches/modules-2/files-2.1/
 install:
-  - ./gradlew clean publishToMavenLocal -x :core:ui:compileKotlinJvm -x :core:ui:compileAndroidMain -x :core:ui:compileCommonMainKotlinMetadata -x :core:ui:compileKotlinIosArm64 -x :core:ui:compileKotlinIosSimulatorArm64 -x :core:ui:compileIosMainKotlinMetadata
+  - ./gradlew clean publishToMavenLocal --no-daemon --no-configuration-cache --refresh-dependencies -x :core:ui:compileKotlinJvm -x :core:ui:compileKotlinIosArm64 -x :core:ui:compileKotlinIosSimulatorArm64 -x :core:ui:compileIosMainKotlinMetadata -x :core:eventBus:compileKotlinJvm -x :core:eventBus:compileKotlinIosArm64 -x :core:eventBus:compileKotlinIosSimulatorArm64 -x :core:eventBus:compileIosMainKotlinMetadata -x :core:dataKV:compileKotlinJvm -x :core:dataKV:compileKotlinIosArm64 -x :core:dataKV:compileKotlinIosSimulatorArm64 -x :core:dataKV:compileIosMainKotlinMetadata
