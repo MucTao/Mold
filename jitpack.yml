@@ -13,5 +13,10 @@ before_install:
   - rm -rf /home/jitpack/build/core/*/build/
   - rm -rf /home/jitpack/build/build/
 
+android:
+  components:
+    - build-tools;36.0.0
+    - platforms;android-37.0
+
 install:
   - ./gradlew clean publishToMavenLocal --no-daemon --no-configuration-cache --refresh-dependencies -x :core:ui:compileKotlinJvm -x :core:ui:compileKotlinIosArm64 -x :core:ui:compileKotlinIosSimulatorArm64 -x :core:ui:compileIosMainKotlinMetadata -x :core:eventBus:compileKotlinJvm -x :core:eventBus:compileKotlinIosArm64 -x :core:eventBus:compileKotlinIosSimulatorArm64 -x :core:eventBus:compileIosMainKotlinMetadata -x :core:dataKV:compileKotlinJvm -x :core:dataKV:compileKotlinIosArm64 -x :core:eventBus:compileKotlinIosSimulatorArm64 -x :core:eventBus:compileIosMainKotlinMetadata
