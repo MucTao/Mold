@@ -1,11 +1,17 @@
+jdk:
+  - openjdk17
+
 before_install:
-  - sdk install java 8
+  - echo "Setting up build environment"
   - wget https://services.gradle.org/distributions/gradle-9.6.1-bin.zip
   - unzip gradle-9.6.1-bin.zip
   - export GRADLE_HOME=$PWD/gradle-9.6.1
   - export PATH=$GRADLE_HOME/bin:$PATH
-  - echo "Cleaning Gradle cache"
+  - echo "Cleaning Gradle cache and build artifacts"
   - rm -rf ~/.gradle/caches/modules-2/files-2.1/
   - mkdir -p ~/.gradle/caches/modules-2/files-2.1/
+  - rm -rf /home/jitpack/build/core/*/build/
+  - rm -rf /home/jitpack/build/build/
+
 install:
-  - ./gradlew clean publishToMavenLocal --no-daemon --no-configuration-cache --refresh-dependencies -x :core:ui:compileKotlinJvm -x :core:ui:compileKotlinIosArm64 -x :core:ui:compileKotlinIosSimulatorArm64 -x :core:ui:compileIosMainKotlinMetadata -x :core:eventBus:compileKotlinJvm -x :core:eventBus:compileKotlinIosArm64 -x :core:eventBus:compileKotlinIosSimulatorArm64 -x :core:eventBus:compileIosMainKotlinMetadata -x :core:dataKV:compileKotlinJvm -x :core:dataKV:compileKotlinIosArm64 -x :core:dataKV:compileKotlinIosSimulatorArm64 -x :core:dataKV:compileIosMainKotlinMetadata
+  - ./gradlew clean publishToMavenLocal --no-daemon --no-configuration-cache --refresh-dependencies -x :core:ui:compileKotlinJvm -x :core:ui:compileKotlinIos -x :core:eventBus:compileKotlinJvm -x :core:eventBus:compileKotlinIos -x :core:dataKV:compileKotlinJvm -x :core:dataKV:compileKotlinIos

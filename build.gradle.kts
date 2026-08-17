@@ -7,3 +7,12 @@ plugins {
     alias(libs.plugins.kotlinJvm) apply false
     alias(libs.plugins.kotlinxSerialization) apply false
 }
+tasks.withType<AbstractCompile>().configureEach {
+    doFirst {
+        val outputDir = destinationDirectory.get().asFile
+        if (outputDir.exists()) {
+            project.delete(destinationDirectory)
+        }
+        outputDir.mkdirs()
+    }
+}
