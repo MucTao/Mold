@@ -14,4 +14,4 @@ before_install:
   - rm -rf /home/jitpack/build/build/
 
 install:
-  - ./gradlew clean publishToMavenLocal --no-daemon --no-configuration-cache --refresh-dependencies -x :core:ui:compileKotlinJvm -x :core:ui:compileKotlinIos -x :core:eventBus:compileKotlinJvm -x :core:eventBus:compileKotlinIos -x :core:dataKV:compileKotlinJvm -x :core:dataKV:compileKotlinIos
+  - ./gradlew clean publishToMavenLocal --no-daemon --no-configuration-cache --refresh-dependencies -x :core:ui:compileKotlinJvm -x :core:ui:compileKotlinIosArm64 -x :core:ui:compileKotlinIosSimulatorArm64 -x :core:ui:compileIosMainKotlinMetadata -x :core:eventBus:compileKotlinJvm -x :core:eventBus:compileKotlinIosArm64 -x :core:eventBus:compileKotlinIosSimulatorArm64 -x :core:eventBus:compileIosMainKotlinMetadata -x :core:dataKV:compileKotlinJvm -x :core:dataKV:compileKotlinIosArm64 -x :core:eventBus:compileKotlinIosSimulatorArm64 -x :core:eventBus:compileIosMainKotlinMetadata
