@@ -5,4 +5,4 @@ before_install:
   - export GRADLE_HOME=$PWD/gradle-9.6.1
   - export PATH=$GRADLE_HOME/bin:$PATH
 install:
-  - ./gradlew clean publishToMavenLocal -x :core:ui:compileKotlinJvm -x :core:ui:compileAndroidMain -x :core:ui:compileCommonMainKotlinMetadata
+  - ./gradlew clean publishToMavenLocal -x :core:ui:compileKotlinJvm -x :core:ui:compileAndroidMain -x :core:ui:compileCommonMainKotlinMetadata -x :core:ui:compileKotlinIosArm64 -x :core:ui:compileKotlinIosSimulatorArm64 -x :core:ui:compileIosMainKotlinMetadata
