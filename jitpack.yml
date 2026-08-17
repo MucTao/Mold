@@ -4,3 +4,5 @@ before_install:
   - unzip gradle-9.6.1-bin.zip
   - export GRADLE_HOME=$PWD/gradle-9.6.1
   - export PATH=$GRADLE_HOME/bin:$PATH
+install:
+  - ./gradlew clean publishToMavenLocal -x :core:ui:compileKotlinJvm -x :core:ui:compileAndroidMain -x :core:ui:compileCommonMainKotlinMetadata
