@@ -41,7 +41,7 @@ publishing {
         create<MavenPublication>("release") {
             from(components["kotlin"])
             groupId = libs.versions.groupId.get()
-            artifactId = "eventBus"
+            artifactId = "mold-eventBus"
             version = libs.versions.mold.version.get()
         }
     }

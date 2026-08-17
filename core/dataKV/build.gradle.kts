@@ -43,7 +43,7 @@ publishing {
         create<MavenPublication>("release") {
             from(components["kotlin"])
             groupId = libs.versions.groupId.get()
-            artifactId = "dataKV"
+            artifactId = "mold-dataKV"
             version = libs.versions.mold.version.get()
         }
     }

@@ -51,7 +51,7 @@ publishing {
         create<MavenPublication>("release") {
             from(components["kotlin"])
             groupId = libs.versions.groupId.get()
-            artifactId = "dataRequest"
+            artifactId = "mold-dataRequest"
             version = libs.versions.mold.version.get()
         }
     }
