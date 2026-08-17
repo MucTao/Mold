@@ -1,6 +1,6 @@
 [versions]
-groupId = "com.muc.mold"
-mold-version = "1.0.0"
+groupId = "com.github.MucTao"
+mold-version = "1.0.1"
 agp = "9.3.1"
 android-compileSdk = "37"
 android-minSdk = "23"
