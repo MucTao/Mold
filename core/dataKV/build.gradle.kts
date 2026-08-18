@@ -9,11 +9,14 @@ plugins {
 
 
 kotlin {
-    jvm()
-    iosArm64()
-    iosSimulatorArm64()
+    val isJitpack = System.getenv("JITPACK") == "true"
+    if (!isJitpack) {
+        jvm()
+        iosArm64()
+        iosSimulatorArm64()
+    }
     android {
-        namespace = "com.muc.datakv"
+        namespace = "org.muc.mold.datakv"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.mold.minSdk.get().toInt()
         compilerOptions {
@@ -33,8 +36,10 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.slf4j.simple)
         }
-        jvmMain.dependencies {
-            implementation(libs.slf4j.simple)
+        if (!isJitpack) {
+            jvmMain.dependencies {
+                implementation(libs.slf4j.simple)
+            }
         }
     }
 }

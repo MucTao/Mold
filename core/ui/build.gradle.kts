@@ -18,7 +18,7 @@ kotlin {
         iosSimulatorArm64()
     }
     android {
-        namespace = "com.muc.network"
+        namespace = "org.muc.mold.ui"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.mold.minSdk.get().toInt()
         androidResources {
