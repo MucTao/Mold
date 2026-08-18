@@ -1,6 +1,6 @@
 [versions]
 groupId = "com.github.MucTao"
-mold-version = "1.0.1"
+mold-version = "1.0.13"
 agp = "9.3.1"
 android-compileSdk = "37"
 android-minSdk = "23"
