@@ -9,12 +9,9 @@ plugins {
 
 
 kotlin {
-    val isJitpack = System.getenv("JITPACK") == "true"
-    if (!isJitpack) {
-        jvm()
-        iosArm64()
-        iosSimulatorArm64()
-    }
+    jvm()
+    iosArm64()
+    iosSimulatorArm64()
     android {
         namespace = "com.muc.datakv"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
@@ -36,10 +33,8 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.slf4j.simple)
         }
-        if (!isJitpack) {
-            jvmMain.dependencies {
-                implementation(libs.slf4j.simple)
-            }
+        jvmMain.dependencies {
+            implementation(libs.slf4j.simple)
         }
     }
 }
