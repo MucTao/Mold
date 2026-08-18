@@ -33,8 +33,10 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.slf4j.simple)
         }
-        jvmMain.dependencies {
-            implementation(libs.slf4j.simple)
+        if (!isJitpack) {
+            jvmMain.dependencies {
+                implementation(libs.slf4j.simple)
+            }
         }
     }
 }

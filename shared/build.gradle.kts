@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.internal.types.error.ErrorModuleDescriptor.platform
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -66,12 +65,6 @@ kotlin {
             implementation(project(":core:ui"))
 
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
-        }
-//        jsMain.dependencies {
-//            implementation(libs.wrappers.browser)
-//        }
     }
 }
 

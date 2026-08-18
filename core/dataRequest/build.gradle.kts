@@ -39,12 +39,14 @@ kotlin {
             implementation(libs.slf4j.simple)
             implementation(libs.ktor.client.okhttp )
         }
-        jvmMain.dependencies {
-            implementation(libs.slf4j.simple)
-            implementation(libs.ktor.client.cio)
-        }
-        iosMain.dependencies {
-            implementation(libs.ktor.client.darwin)
+        if (!isJitpack) {
+            jvmMain.dependencies {
+                implementation(libs.slf4j.simple)
+                implementation(libs.ktor.client.cio)
+            }
+            iosMain.dependencies {
+                implementation(libs.ktor.client.darwin)
+            }
         }
     }
 }

@@ -58,18 +58,20 @@ kotlin {
             api(libs.reorderable)
         }
         androidMain.dependencies {
-            implementation(libs.ktor.client.okhttp )
+            implementation(libs.ktor.client.okhttp)
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.compose.uiTooling)
             implementation(libs.slf4j.simple)
         }
-        jvmMain.dependencies {
-            implementation(libs.slf4j.simple)
-            implementation(libs.ktor.client.cio)
-        }
-        iosMain.dependencies {
-            implementation(libs.slf4j.simple)
-            implementation(libs.ktor.client.darwin)
+        if (!isJitpack) {
+            jvmMain.dependencies {
+                implementation(libs.slf4j.simple)
+                implementation(libs.ktor.client.cio)
+            }
+            iosMain.dependencies {
+                implementation(libs.slf4j.simple)
+                implementation(libs.ktor.client.darwin)
+            }
         }
     }
 }
