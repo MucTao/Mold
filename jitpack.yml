@@ -19,11 +19,4 @@ android:
     - platforms;android-37.0
 
 install:
-  - ./gradlew clean publishToMavenLocal --no-configuration-cache --refresh-dependencies \
-    -x :core:ui:compileKotlinJvm \
-    -x :desktopApp:build \
-    -x :desktopApp:jar \
-    -x test \
-    -x lint \
-    --no-daemon \
-    --no-build-cache
+  - ./gradlew clean publishToMavenLocal -no-daemon -no-build-cache --no-configuration-cache --refresh-dependencies x test -x lint -x :core:ui:compileKotlinJvm -x :desktopApp:build -x :desktopApp:jar
