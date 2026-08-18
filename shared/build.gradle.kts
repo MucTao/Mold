@@ -10,18 +10,20 @@ plugins {
 }
 
 kotlin {
-    jvmToolchain(21)
-    listOf(
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "Shared"
-            isStatic = true
+    val isJitpack = System.getenv("JITPACK") == "true"
+    if (!isJitpack) {
+        listOf(
+            iosArm64(),
+            iosSimulatorArm64()
+        ).forEach { iosTarget ->
+            iosTarget.binaries.framework {
+                baseName = "Shared"
+                isStatic = true
+            }
         }
+        jvmToolchain(21)
+        jvm()
     }
-
-    jvm()
 
     android {
         namespace = "org.muc.mold.shared"

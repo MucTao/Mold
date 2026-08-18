@@ -9,9 +9,12 @@ plugins {
 
 
 kotlin {
-    jvm()
-    iosArm64()
-    iosSimulatorArm64()
+    val isJitpack = System.getenv("JITPACK") == "true"
+    if (!isJitpack) {
+        jvm()
+        iosArm64()
+        iosSimulatorArm64()
+    }
     android {
         namespace = "com.muc.eventbus"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
