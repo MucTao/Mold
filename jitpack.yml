@@ -2,6 +2,7 @@ jdk:
   - openjdk17
 
 before_install:
+  - export JAVA_OPTS="-Xmx4g -XX:MaxMetaspaceSize=512m"
   - echo "Setting up build environment"
   - wget https://services.gradle.org/distributions/gradle-9.6.1-bin.zip
   - unzip gradle-9.6.1-bin.zip
