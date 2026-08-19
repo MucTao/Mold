@@ -3,6 +3,7 @@ package org.muc.datakv
 import kotlinx.serialization.serializer
 import org.muc.datakv.content.DataContentEngine
 import org.muc.datakv.content.DataContentKVProperty
+import org.muc.datakv.datastore.DataStoreCache
 import org.muc.datakv.datastore.DataStoreKVProperty
 import org.muc.datakv.datastore.createExpirableDataStore
 
@@ -22,4 +23,4 @@ inline fun <reified T> dataCross(default: T): DataKVProperty<T> =
 
 inline fun <reified T> datakv(default: T, cross: Boolean = false): DataKVProperty<T> =
     if (cross) dataCross(default)
-    else DataStoreKVProperty(::createExpirableDataStore, default)
+    else DataStoreKVProperty(DataStoreCache::createExpirableDataStore, default)
