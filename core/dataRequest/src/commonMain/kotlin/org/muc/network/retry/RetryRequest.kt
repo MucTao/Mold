@@ -13,11 +13,11 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.retryWhen
-import org.muc.network.DataEmpty
-import org.muc.network.DataFail
-import org.muc.network.DataLoading
-import org.muc.network.DataResult
-import org.muc.network.DataSuccess
+import org.muc.network.status.DataFlowEmpty
+import org.muc.network.status.DataFlowFail
+import org.muc.network.status.DataFlowLoading
+import org.muc.network.status.DataFlowResult
+import org.muc.network.status.DataFlowSuccess
 import kotlin.time.Duration.Companion.milliseconds
 
 
@@ -25,7 +25,7 @@ interface RetryRequest {
     fun <T> refreshableRequest(
         trigger: Trigger = Trigger(), // 外部传入的触发器
         request: suspend () -> Flow<T?>
-    ): Flow<DataResult<T>>
+    ): Flow<DataFlowResult<T>>
 }
 
 object RetryRequestImpl : RetryRequest {
@@ -33,22 +33,22 @@ object RetryRequestImpl : RetryRequest {
     override fun <T> refreshableRequest(
         trigger: Trigger,
         request: suspend () -> Flow<T?>
-    ): Flow<DataResult<T>> = trigger.getRetryFlow()
+    ): Flow<DataFlowResult<T>> = trigger.getRetryFlow()
         .flatMapLatest {
-            val res: Flow<DataResult<T>> = request()
+            val res: Flow<DataFlowResult<T>> = request()
                 .map { value ->
                     when (value) {
-                        null -> DataEmpty(trigger)
-                        is List<*> -> if (value.isEmpty()) DataEmpty(trigger) else DataSuccess(value, trigger)
-                        else -> DataSuccess(value, trigger)
+                        null -> DataFlowEmpty(trigger)
+                        is List<*> -> if (value.isEmpty()) DataFlowEmpty(trigger) else DataFlowSuccess(value, trigger)
+                        else -> DataFlowSuccess(value, trigger)
                     }
                 }
-                .onStart { emit(DataLoading(trigger)) }
+                .onStart { emit(DataFlowLoading(trigger)) }
                 .catch {
                     if (it is NullPointerException) {
-                        emit(DataEmpty(trigger))
+                        emit(DataFlowEmpty(trigger))
                     } else
-                        emit(DataFail(it, trigger))
+                        emit(DataFlowFail(it, trigger))
                 }
             res
         } //.distinctUntilChanged() 避免重复结果
@@ -56,7 +56,7 @@ object RetryRequestImpl : RetryRequest {
 
 interface ApiRequest : RetryRequest {
     fun <T> request(request: suspend () -> T): Flow<T?>
-    fun <T> reRequest(request: suspend () -> T?): Flow<DataResult<T>>
+    fun <T> reRequest(request: suspend () -> T?): Flow<DataFlowResult<T>>
 }
 
 object ApiRequestImpl : ApiRequest, RetryRequest by RetryRequestImpl {
@@ -64,7 +64,7 @@ object ApiRequestImpl : ApiRequest, RetryRequest by RetryRequestImpl {
         .retry()
         .flowOn(Dispatchers.IO)
 
-    override fun <T> reRequest(request: suspend () -> T?): Flow<DataResult<T>> = refreshableRequest {
+    override fun <T> reRequest(request: suspend () -> T?): Flow<DataFlowResult<T>> = refreshableRequest {
         request {
             request()
         }
