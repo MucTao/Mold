@@ -56,7 +56,8 @@ class DataStoreKVDelegate<V>(
             val now = nowMillis()
             val expired = isExpired(expireTime, now)
             if (!expired) {
-                clearExpiredData(expireTime.minus(now).milliseconds)
+                if (expireTime != 0L)
+                    clearExpiredData(expireTime.minus(now).milliseconds)
                 val value: V = block(if (expired) defaultValue else pre.data ?: defaultValue)
                 cleaned.value = false
                 expireTimeFlow.value = expireTime

@@ -48,7 +48,8 @@ object DataKV : DataContentEngine {
                 Log.i(ShareProvider.TAG, "DataContentEngine put : 传入的过期时间 执行delete($key)")
                 delete(key)
             } else {
-                clearExpiredData(expireTime.minus(now).milliseconds, key)
+                if (expireTime != 0L)
+                    clearExpiredData(expireTime.minus(now).milliseconds, key)
                 val data = ExpirableData<T>(value, expireTime)
                 val values = ContentValues()
                 values.put(key, json.encodeToString(ExpirableData.serializer(serializer), data))
