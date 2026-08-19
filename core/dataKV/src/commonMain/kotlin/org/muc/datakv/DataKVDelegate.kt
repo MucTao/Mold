@@ -28,31 +28,29 @@ import kotlin.time.Duration.Companion.seconds
  */
 interface DataKVDelegate<V> {
     val defaultValue: V
-    val valueFlow: StateFlow<V>
-    var value: V
-        get() = valueFlow.value
-        set(newValue) = setValue { newValue }
+    val flow: StateFlow<V>
+    val value: V get() = flow.value
 
     val expireTimeFlow: StateFlow<Long>
     val expireTime: Long get() = expireTimeFlow.value
 
     val expireTimeDurationFlow: Flow<Duration>
 
-    fun setValue(expireTime: Long = NO_EXPIRATION, block: (V) -> V)
+    suspend fun setValue(expireTime: Long = NO_EXPIRATION, block: (V) -> V): V
 
-    fun setValue(duration: Duration, block: (V) -> V) {
+    suspend fun setValue(duration: Duration, block: (V) -> V): V =
         setValue(
             if (duration.isPositive()) nowMillis() + duration.inWholeMilliseconds else NO_EXPIRATION,
             block
         )
-    }
 
-    fun setValue(dateTime: LocalDateTime, block: (V) -> V) {
+
+    suspend fun setValue(dateTime: LocalDateTime, block: (V) -> V): V =
         setValue(
             dateTime.toInstant(TimeZone.currentSystemDefault()).toEpochMilliseconds(),
             block
         )
-    }
+
 
     /**
      * 清除后值会变成默认值

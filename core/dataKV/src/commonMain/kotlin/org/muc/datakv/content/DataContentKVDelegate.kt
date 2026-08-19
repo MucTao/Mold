@@ -2,12 +2,15 @@
 
 package org.muc.datakv.content
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.KSerializer
 import org.muc.datakv.DataKVDelegate
 import org.muc.datakv.ExpirableData
@@ -24,19 +27,19 @@ class DataContentKVDelegate<V>(
     private val key: String,
     override val defaultValue: V,
 ) : DataKVDelegate<V> {
-    override val valueFlow: StateFlow<V> field = MutableStateFlow(defaultValue)
+    override val flow: StateFlow<V> field = MutableStateFlow(defaultValue)
 
     override val expireTimeFlow: StateFlow<Long> field = MutableStateFlow(NO_EXPIRATION)
 
     override val expireTimeDurationFlow: Flow<Duration> = expireTimeFlow.asDuration()
 
-    override fun setValue(expireTime: Long, block: (V) -> V) {
-        engine?.put(key, block(value), serializer, expireTime)
+    override suspend fun setValue(expireTime: Long, block: (V) -> V): V = withContext(Dispatchers.IO) {
+        engine?.put(key, block(value), serializer, expireTime) ?: defaultValue
     }
 
     override fun clear() {
         expireTimeFlow.value = NO_EXPIRATION
-        valueFlow.value = defaultValue
+        flow.value = defaultValue
         engine?.delete(key)
         logger.debug { "Cleared value for $key" }
     }
@@ -52,7 +55,7 @@ class DataContentKVDelegate<V>(
             if (str == key) {
                 logger.info { "dataContent：${str}的值发生变化" }
                 loadByEngine()
-                logger.info { "dataContent：${str}变化后的值为：${valueFlow.value}" }
+                logger.info { "dataContent：${str}变化后的值为：${flow.value}" }
             }
         }?.launchIn(ioScope)
     }
@@ -66,8 +69,8 @@ class DataContentKVDelegate<V>(
                 expireTimeFlow.value = expirableData.expireTime
             }
             val newValue = expirableData.data ?: defaultValue
-            if (newValue != valueFlow.value) {
-                valueFlow.value = newValue
+            if (newValue != flow.value) {
+                flow.value = newValue
             }
         }
     }

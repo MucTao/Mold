@@ -101,7 +101,7 @@ class MainViewModel : ViewModel() {
                             store.testCount.setValue { it + 1 }
                         }
                     }) {
-                        val testCount by store.testCount.valueFlow.collectAsState(null)
+                        val testCount by store.testCount.flow.collectAsState(null)
                         Text("当前testCount的值${testCount}")
                     },
                     InfoData.InfoItemData("expireCount++", onClick = {
@@ -111,7 +111,7 @@ class MainViewModel : ViewModel() {
                             }
                         }
                     }) {
-                        val expireCount by store.expireCount.valueFlow.collectAsState(null)
+                        val expireCount by store.expireCount.flow.collectAsState(null)
                         val expireDuration by store.expireCount.expireTimeDurationFlow.collectAsState(Duration.ZERO)
                         Text("${expireDuration}后过期，当前expireCount的值${expireCount}")
                     },
@@ -122,7 +122,7 @@ class MainViewModel : ViewModel() {
                             }
                         }
                     }) {
-                        val testCount by store.cpCountPt.valueFlow.collectAsState(null)
+                        val testCount by store.cpCountPt.flow.collectAsState(null)
                         val expireDuration by store.cpCountPt.expireTimeDurationFlow.collectAsState(Duration.ZERO)
                         Text("${expireDuration}后过期，当前testCount的值${testCount}")
                     },

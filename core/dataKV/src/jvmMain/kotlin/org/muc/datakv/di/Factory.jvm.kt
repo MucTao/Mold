@@ -9,9 +9,10 @@ import java.io.File
 
 actual fun getDataKVStorePath(name: String): String = File(System.getProperty("user.home"), name).absolutePath
 actual fun createDataEngine(): DataContentEngine = object : DataContentEngine {
-    override fun <T> put(key: String, value: T, serializer: KSerializer<T>, expireTime: Long) {
-
+    override suspend fun <T> put(key: String, value: T, serializer: KSerializer<T>, expireTime: Long): T {
+        return value
     }
+
 
     override fun delete(key: String) {
 

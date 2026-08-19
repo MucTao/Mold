@@ -11,9 +11,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.KSerializer
+import org.muc.datakv.ExpirableData
 import org.muc.datakv.ShareProvider
 import org.muc.datakv.content.DataContentEngine
-import org.muc.datakv.ExpirableData
 import kotlin.time.Clock
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
@@ -36,7 +36,7 @@ object DataKV : DataContentEngine {
     private val cr: ContentResolver by lazy { _app.contentResolver }
 
 
-    override fun <T> put(key: String, value: T, serializer: KSerializer<T>, expireTime: Long) {
+    override suspend fun <T> put(key: String, value: T, serializer: KSerializer<T>, expireTime: Long): T {
         Log.i(ShareProvider.TAG, "DataContentEngine put : $key = $value expireTime=$expireTime")
         if (value == null) {
             Log.i(ShareProvider.TAG, "DataContentEngine put : 传入的值为空 执行delete($key)")
@@ -59,6 +59,7 @@ object DataKV : DataContentEngine {
                 )
             }
         }
+        return value
     }
 
     override fun delete(key: String) {

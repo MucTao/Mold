@@ -5,6 +5,8 @@ package org.muc.datakv.datastore
 import androidx.datastore.core.DataStore
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.locks.SynchronizedObject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -15,6 +17,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.muc.datakv.DataKVDelegate
 import org.muc.datakv.ExpirableData
 import org.muc.datakv.asDuration
@@ -30,7 +33,7 @@ class DataStoreKVDelegate<V>(
 ) : DataKVDelegate<V> {
     private val cleaned = atomic(false)
 
-    override val valueFlow: StateFlow<V> = dataStore.data.map { data ->
+    override val flow: StateFlow<V> = dataStore.data.map { data ->
         expireTimeFlow.value = data.expireTime
         if (isExpired(data.expireTime)) {
             clearExpiredData()
@@ -48,24 +51,22 @@ class DataStoreKVDelegate<V>(
 
     override val expireTimeDurationFlow: Flow<Duration> = expireTimeFlow.asDuration()
 
-    override fun setValue(expireTime: Long, block: (V) -> V) {
-        ioScope.launch {
-            dataStore.updateData { pre ->
-                val now = nowMillis()
-                val expired = isExpired(expireTime, now)
-                if (!expired) {
-                    clearExpiredData(expireTime.minus(now).milliseconds)
-                    val value: V = block(if (expired) defaultValue else pre.data ?: defaultValue)
-                    cleaned.value = false
-                    expireTimeFlow.value = expireTime
-                    pre.copy(data = value, expireTime = expireTime)
-                } else {
-                    cleaned.value = true
-                    expireTimeFlow.value = NO_EXPIRATION
-                    pre.copy(data = null, expireTime = expireTime)
-                }
+    override suspend fun setValue(expireTime: Long, block: (V) -> V): V = withContext(Dispatchers.IO) {
+        dataStore.updateData { pre ->
+            val now = nowMillis()
+            val expired = isExpired(expireTime, now)
+            if (!expired) {
+                clearExpiredData(expireTime.minus(now).milliseconds)
+                val value: V = block(if (expired) defaultValue else pre.data ?: defaultValue)
+                cleaned.value = false
+                expireTimeFlow.value = expireTime
+                pre.copy(data = value, expireTime = expireTime)
+            } else {
+                cleaned.value = true
+                expireTimeFlow.value = NO_EXPIRATION
+                pre.copy(data = null, expireTime = expireTime)
             }
-        }
+        }.data ?: defaultValue
     }
 
     override fun clear() {

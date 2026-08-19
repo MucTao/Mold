@@ -57,7 +57,7 @@ object DataKV : DataContentEngine {
         }
     }
 
-    override fun <T> put(key: String, value: T, serializer: KSerializer<T>, expireTime: Long) {
+    override suspend fun <T> put(key: String, value: T, serializer: KSerializer<T>, expireTime: Long): T {
         if (value == null) {
             delete(key)
         } else {
@@ -67,13 +67,14 @@ object DataKV : DataContentEngine {
                 delete(key)
             } else {
                 val data = ExpirableData<T>(value, expireTime)
-                ioScope.launch {
-                    dataStore?.edit { prefs ->
-                        prefs[stringPreferencesKey(key)] = json.encodeToString(ExpirableData.serializer(serializer), data)
-                    }
-                }
+                val resStr = dataStore?.edit { prefs ->
+                    prefs[stringPreferencesKey(key)] = json.encodeToString(ExpirableData.serializer(serializer), data)
+                }?.get(stringPreferencesKey(key)) ?: return value
+                val res = json.decodeFromString(ExpirableData.serializer(serializer), resStr)
+                return res.data ?: value
             }
         }
+        return value
     }
 
     override fun delete(key: String) {
