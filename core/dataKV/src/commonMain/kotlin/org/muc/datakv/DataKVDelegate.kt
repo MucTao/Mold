@@ -30,6 +30,7 @@ interface DataKVDelegate<V> {
     val defaultValue: V
     val flow: StateFlow<V>
     val value: V get() = flow.value
+    suspend fun getValue() : V
 
     val expireTimeFlow: StateFlow<Long>
     val expireTime: Long get() = expireTimeFlow.value

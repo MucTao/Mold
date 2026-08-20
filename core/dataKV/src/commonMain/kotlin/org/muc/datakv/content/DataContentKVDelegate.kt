@@ -28,6 +28,18 @@ class DataContentKVDelegate<V>(
     override val defaultValue: V,
 ) : DataKVDelegate<V> {
     override val flow: StateFlow<V> field = MutableStateFlow(defaultValue)
+    override suspend fun getValue(): V {
+        val expirableData: ExpirableData<V> = engine?.get(key, serializer, defaultValue) ?: return defaultValue
+        val newExpireTime = expirableData.expireTime
+        if (newExpireTime != expireTimeFlow.value) {
+            expireTimeFlow.value = expirableData.expireTime
+        }
+        val newValue = expirableData.data ?: defaultValue
+        if (newValue != flow.value) {
+            flow.value = newValue
+        }
+        return newValue
+    }
 
     override val expireTimeFlow: StateFlow<Long> field = MutableStateFlow(NO_EXPIRATION)
 

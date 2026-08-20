@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -46,6 +47,16 @@ class DataStoreKVDelegate<V>(
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = defaultValue
     )
+
+    override suspend fun getValue(): V = dataStore.data.map { data ->
+        expireTimeFlow.value = data.expireTime
+        if (isExpired(data.expireTime)) {
+            clearExpiredData()
+            defaultValue
+        } else {
+            data.data ?: defaultValue
+        }
+    }.firstOrNull() ?: defaultValue
 
     override val expireTimeFlow: StateFlow<Long> field = MutableStateFlow(NO_EXPIRATION)
 

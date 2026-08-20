@@ -2,6 +2,7 @@ package org.muc.ui.design
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.runtime.Composable
@@ -14,6 +15,9 @@ private val MucDeckShapes = Shapes(
     large = RoundedCornerShape(MucCornerRadius.XLARGE.value),
     extraLarge = RoundedCornerShape(MucCornerRadius.XLARGE.value),
 )
+
+@Composable
+expect fun dynamicColor(darkTheme: Boolean): ColorScheme?
 
 /**
  * ADB Deck 应用的根主题。
@@ -30,12 +34,13 @@ fun MucTheme(
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
+    val dynamicColor = dynamicColor(isDarkTheme)
     val semanticColors = if (isDarkTheme) DarkMucSemanticColors else LightMucSemanticColors
     CompositionLocalProvider(
         LocalMucSemanticColors provides semanticColors,
     ) {
         MaterialTheme(
-            colorScheme = if (isDarkTheme) DarkColorScheme else LightColorScheme,
+            colorScheme = dynamicColor ?: (if (isDarkTheme) DarkColorScheme else LightColorScheme),
             typography = MucTypography,
             shapes = MucDeckShapes,
             content = content,
