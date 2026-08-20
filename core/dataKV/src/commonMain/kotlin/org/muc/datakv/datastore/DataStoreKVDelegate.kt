@@ -11,12 +11,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.muc.datakv.DataKVDelegate
@@ -34,7 +32,7 @@ class DataStoreKVDelegate<V>(
 ) : DataKVDelegate<V> {
     private val cleaned = atomic(false)
 
-    override val flow: StateFlow<V> = dataStore.data.map { data ->
+    override val flow: Flow<V> = dataStore.data.map { data ->
         expireTimeFlow.value = data.expireTime
         if (isExpired(data.expireTime)) {
             clearExpiredData()
@@ -42,21 +40,9 @@ class DataStoreKVDelegate<V>(
         } else {
             data.data ?: defaultValue
         }
-    }.distinctUntilChanged().stateIn(
-        scope = ioScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = defaultValue
-    )
+    }
 
-    override suspend fun getValue(): V = dataStore.data.map { data ->
-        expireTimeFlow.value = data.expireTime
-        if (isExpired(data.expireTime)) {
-            clearExpiredData()
-            defaultValue
-        } else {
-            data.data ?: defaultValue
-        }
-    }.firstOrNull() ?: defaultValue
+    override suspend fun getValue(): V = flow.firstOrNull() ?: defaultValue
 
     override val expireTimeFlow: StateFlow<Long> field = MutableStateFlow(NO_EXPIRATION)
 

@@ -28,8 +28,9 @@ import kotlin.time.Duration.Companion.seconds
  */
 interface DataKVDelegate<V> {
     val defaultValue: V
-    val flow: StateFlow<V>
-    val value: V get() = flow.value
+
+    val flow: Flow<V>
+
     suspend fun getValue() : V
 
     val expireTimeFlow: StateFlow<Long>
