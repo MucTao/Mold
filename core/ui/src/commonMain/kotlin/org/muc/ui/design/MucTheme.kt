@@ -31,10 +31,11 @@ expect fun dynamicColor(darkTheme: Boolean): ColorScheme?
  */
 @Composable
 fun MucTheme(
+    isDynamic: Boolean? = null,
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    val dynamicColor = dynamicColor(isDarkTheme)
+    val dynamicColor = if (isDynamic == true) dynamicColor(isDarkTheme) else null
     val semanticColors = if (isDarkTheme) DarkMucSemanticColors else LightMucSemanticColors
     CompositionLocalProvider(
         LocalMucSemanticColors provides semanticColors,
