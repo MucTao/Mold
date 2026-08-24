@@ -4,6 +4,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -33,6 +34,7 @@ expect fun dynamicColor(darkTheme: Boolean): ColorScheme?
  *                    默认读取系统设置。
  * @param content     应用主题的内容。
  */
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun MoldTheme(
     seedColor: Color = MoldBlue,

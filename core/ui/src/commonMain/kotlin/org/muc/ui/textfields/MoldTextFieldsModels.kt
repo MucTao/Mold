@@ -9,6 +9,10 @@ import androidx.compose.ui.unit.dp
  * 预配置颜色语义的固定文本框类型。
  */
 enum class MoldTextFieldType {
+    NORMAL,
+
+    PRIMARY,
+
     /** 中性状态。 */
     NEUTRAL,
 

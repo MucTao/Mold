@@ -45,6 +45,7 @@ sealed class Action(open val msg: @Composable () -> String) {
         override val msg: @Composable () -> String,
         val type: MoldButtonType,
         val onConfirmAction: ActionManager.(T) -> Unit,
+        val modifier: Modifier = Modifier,
         val default: T? = null,
         val errorMsg: MutableState<String?> = mutableStateOf(null),
         val content: (@Composable (ActionContentScope<T>) -> Unit)? = null
@@ -53,10 +54,11 @@ sealed class Action(open val msg: @Composable () -> String) {
             msg: String,
             type: MoldButtonType,
             onConfirmAction: ActionManager.(T) -> Unit,
+            modifier: Modifier = Modifier,
             default: T? = null,
             errorMsg: MutableState<String?> = mutableStateOf(null),
             content: (@Composable (ActionContentScope<T>) -> Unit)? = null
-        ) : this({ msg }, type, onConfirmAction, default, errorMsg, content)
+        ) : this({ msg }, type, onConfirmAction, modifier, default, errorMsg, content)
     }
 
     data class ActionRequestDialog<T>(
@@ -248,6 +250,7 @@ private fun <E> ActionRequestAlertDialog(
     }
 
     MoldAlertDialog(
+        modifier = action.modifier,
         onDismissRequest = actionManager::onCancelAction,
         title = action.msg(),
         confirmAction = MoldAlertDialogAction(

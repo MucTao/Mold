@@ -20,7 +20,7 @@ data class MoldAlertDialogAction(
     val onClick: () -> Unit,
     val enabled: Boolean = true,
     val loading: Boolean = false,
-    val type: MoldButtonType = MoldButtonType.NEUTRAL,
+    val type: MoldButtonType = MoldButtonType.PRIMARY,
     val size: MoldButtonSize = MoldButtonSize.MEDIUM,
     val cornerRadius: MoldCornerRadius = MoldCornerRadius.MEDIUM,
 )

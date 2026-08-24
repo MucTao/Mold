@@ -68,7 +68,7 @@ fun MoldFilledTextField(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String? = null,
-    type: MoldTextFieldType = MoldTextFieldType.NEUTRAL,
+    type: MoldTextFieldType = MoldTextFieldType.PRIMARY,
     size: MoldTextFieldSize = MoldTextFieldSize.MEDIUM,
     cornerRadius: MoldCornerRadius = MoldCornerRadius.MEDIUM,
     enabled: Boolean = true,
@@ -115,7 +115,7 @@ fun MoldOutlinedTextField(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String? = null,
-    type: MoldTextFieldType = MoldTextFieldType.NEUTRAL,
+    type: MoldTextFieldType = MoldTextFieldType.PRIMARY,
     size: MoldTextFieldSize = MoldTextFieldSize.MEDIUM,
     cornerRadius: MoldCornerRadius = MoldCornerRadius.MEDIUM,
     enabled: Boolean = true,
@@ -162,7 +162,7 @@ fun MoldPlainTextField(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String? = null,
-    type: MoldTextFieldType = MoldTextFieldType.NEUTRAL,
+    type: MoldTextFieldType = MoldTextFieldType.PRIMARY,
     size: MoldTextFieldSize = MoldTextFieldSize.MEDIUM,
     cornerRadius: MoldCornerRadius = MoldCornerRadius.MEDIUM,
     enabled: Boolean = true,
@@ -347,6 +347,8 @@ private fun resolveTextFieldColors(
     focused: Boolean,
 ): MoldTextFieldResolvedColors {
     val baseColor = when (type) {
+        MoldTextFieldType.NORMAL -> MaterialTheme.colorScheme.onSurface
+        MoldTextFieldType.PRIMARY -> MaterialTheme.colorScheme.primary
         MoldTextFieldType.NEUTRAL -> MoldBlue
         MoldTextFieldType.DANGER -> MoldRed
         MoldTextFieldType.SUCCESS -> MoldGreen
@@ -355,7 +357,7 @@ private fun resolveTextFieldColors(
     val outline = MaterialTheme.colorScheme.outline
     val onSurface = MaterialTheme.colorScheme.onSurface
     val placeholder = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.75f)
-    val supporting = if (type == MoldTextFieldType.NEUTRAL) {
+    val supporting = if (type == MoldTextFieldType.NORMAL) {
         MaterialTheme.colorScheme.onSurfaceVariant
     } else {
         baseColor

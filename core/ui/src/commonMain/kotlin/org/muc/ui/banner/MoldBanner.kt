@@ -45,7 +45,7 @@ private data class MoldBannerVisuals(
 fun MoldBanner(
     message: String,
     alignment: Alignment,
-    type: MoldBannerType = MoldBannerType.INFO,
+    type: MoldBannerType = MoldBannerType.PRIMARY,
     modifier: Modifier = Modifier,
     onDismiss: (() -> Unit)? = null,
     dismissStyle: MoldBannerDismissStyle = MoldBannerDismissStyle.ICON,
@@ -107,7 +107,7 @@ fun MoldBanner(
 @Composable
 fun MoldBanner(
     message: String,
-    type: MoldBannerType = MoldBannerType.INFO,
+    type: MoldBannerType = MoldBannerType.PRIMARY,
     modifier: Modifier = Modifier,
     onDismiss: (() -> Unit)? = null,
     dismissStyle: MoldBannerDismissStyle = MoldBannerDismissStyle.ICON,
@@ -201,6 +201,18 @@ private fun BannerDismissAction(
 @Composable
 private fun bannerVisuals(type: MoldBannerType): MoldBannerVisuals {
     return when (type) {
+        MoldBannerType.NORMAL -> MoldBannerVisuals(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+            contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            icon = Icons.Outlined.Info,
+        )
+
+        MoldBannerType.PRIMARY -> MoldBannerVisuals(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            icon = Icons.Outlined.Info,
+        )
+
         MoldBannerType.INFO -> MoldBannerVisuals(
             containerColor = MaterialTheme.colorScheme.tertiaryContainer,
             contentColor = MaterialTheme.colorScheme.onTertiaryContainer,

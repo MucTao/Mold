@@ -1,12 +1,13 @@
 package org.muc.ui.banner
 
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-
 /**
  * 横幅的语义类型。
  */
 enum class MoldBannerType {
+    NORMAL,
+
+    PRIMARY,
+
     /** 信息消息。 */
     INFO,
 

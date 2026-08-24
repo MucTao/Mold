@@ -13,7 +13,7 @@ fun ConfirmDialog(
     title: String? = null,
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
-    type: MoldButtonType = MoldButtonType.NEUTRAL,
+    type: MoldButtonType = MoldButtonType.PRIMARY,
     content: @Composable () -> Unit,
 ) {
     MoldAlertDialog(
