@@ -1,4 +1,3 @@
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidMultiplatformLibrary)
@@ -37,7 +36,7 @@ kotlin {
         }
         androidMain.dependencies {
             implementation(libs.slf4j.simple)
-            implementation(libs.ktor.client.okhttp )
+            implementation(libs.ktor.client.okhttp)
         }
         if (!isJitpack) {
             jvmMain.dependencies {
@@ -55,8 +54,8 @@ publishing {
     publications {
         create<MavenPublication>("release") {
             from(components["kotlin"])
-            groupId = libs.versions.groupId.get()
-            artifactId = "mold-dataRequest"
+            groupId = libs.versions.groupId.get() + ".Mold"
+            artifactId = "dataRequest"
             version = libs.versions.mold.version.get()
         }
     }

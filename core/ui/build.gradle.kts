@@ -84,8 +84,8 @@ publishing {
     publications {
         create<MavenPublication>("release") {
             from(components["kotlin"])
-            groupId = libs.versions.groupId.get()
-            artifactId = "mold-ui"
+            groupId = libs.versions.groupId.get() + ".Mold"
+            artifactId = "ui"
             version = libs.versions.mold.version.get()
         }
     }
