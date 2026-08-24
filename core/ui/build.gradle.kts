@@ -52,9 +52,13 @@ kotlin {
             implementation(libs.compose.material3)
             implementation(libs.compose.material.icons)
             implementation(libs.compose.uiToolingPreview)
+            implementation(libs.materialKolor)
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
             implementation(libs.ktor.client.core)
+            api(libs.androidx.navigation3.ui)
+            implementation(libs.androidx.compose.material3.adaptive.navigation3)
+            api(libs.androidx.lifecycle.viewModel.navigation3)
             api(libs.reorderable)
         }
         androidMain.dependencies {

@@ -24,7 +24,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.muc.ui.buttons.MoldFilledButton
+import org.muc.ui.design.MoldBlue
 import org.muc.ui.design.MoldCornerRadius
+import org.muc.ui.design.MoldGreen
+import org.muc.ui.design.MoldTheme
 import org.muc.ui.floatdrag.DraggableContent
 
 val space = Arrangement.spacedBy(8.dp)
@@ -32,7 +35,7 @@ val space = Arrangement.spacedBy(8.dp)
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
+    MoldTheme(MoldGreen) {
         val viewModel: MainViewModel = viewModel()
         Box(Modifier.fillMaxSize()) {
             LazyColumn(

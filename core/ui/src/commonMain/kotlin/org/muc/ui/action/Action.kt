@@ -3,7 +3,6 @@ package org.muc.ui.action
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,6 +36,8 @@ import org.muc.ui.buttons.MoldButtonType
 import org.muc.ui.buttons.MoldFilledButton
 import org.muc.ui.buttons.MoldOutlinedButton
 import org.muc.ui.design.Dimensions
+import org.muc.ui.design.MoldTheme
+import org.muc.ui.design.adaptive.WindowWidthType
 import org.muc.ui.i18n.MoldCommonStringRes
 
 sealed class Action(open val msg: @Composable () -> String) {
@@ -209,6 +210,7 @@ fun ActionView(actionManager: ActionManager) {
     }
 
     state.feedback?.let { feedback ->
+        val windowWidthType = MoldTheme.windowWidthType
         MoldBanner(
             message = when (feedback) {
                 is ActionFeedback.ActionError -> {
@@ -225,7 +227,7 @@ fun ActionView(actionManager: ActionManager) {
             type = feedback.type,
             onDismiss = actionManager::onCancelAction,
             alignment = Alignment.BottomEnd,
-            modifier = Modifier.fillMaxWidth(0.5f)
+            modifier = Modifier.fillMaxWidth(if (windowWidthType == WindowWidthType.EXPANDED) .6f else .9f)
                 .padding(Dimensions.paddingDefault),
         )
     }

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
@@ -275,7 +274,7 @@ private fun <T> MoldBaseTreeDropdownTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(size.height)
-                .clip(RoundedCornerShape(cornerRadius.value))
+                .clip(cornerRadius.shape)
                 .clickable(enabled = enabled) { expanded = !expanded },
         )
 

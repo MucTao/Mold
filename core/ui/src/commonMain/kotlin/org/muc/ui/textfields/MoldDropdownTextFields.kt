@@ -249,7 +249,7 @@ private fun <T> MoldBaseDropdownTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(size.height)
-                .clip(RoundedCornerShape(cornerRadius.value))
+                .clip(cornerRadius.shape)
                 .clickable(enabled = enabled) {
                     expanded = !expanded
                 },

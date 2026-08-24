@@ -1,20 +1,23 @@
 package org.muc.ui.design
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.graphics.Color
+import com.materialkolor.rememberDynamicColorScheme
+import org.muc.ui.design.adaptive.LocalWindowWidthType
+import org.muc.ui.design.adaptive.windowWidthType
 
 private val MoldDeckShapes = Shapes(
-    extraSmall = RoundedCornerShape(MoldCornerRadius.SMALL.value),
-    small = RoundedCornerShape(MoldCornerRadius.MEDIUM.value),
-    medium = RoundedCornerShape(MoldCornerRadius.LARGE.value),
-    large = RoundedCornerShape(MoldCornerRadius.XLARGE.value),
-    extraLarge = RoundedCornerShape(MoldCornerRadius.XLARGE.value),
+    extraSmall = MoldCornerRadius.XSMALL.shape,
+    small = MoldCornerRadius.SMALL.shape,
+    medium = MoldCornerRadius.MEDIUM.shape,
+    large = MoldCornerRadius.LARGE.shape,
+    extraLarge = MoldCornerRadius.XLARGE.shape,
 )
 
 @Composable
@@ -32,6 +35,7 @@ expect fun dynamicColor(darkTheme: Boolean): ColorScheme?
  */
 @Composable
 fun MoldTheme(
+    seedColor: Color = MoldBlue,
     isDynamic: Boolean? = null,
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
@@ -39,12 +43,11 @@ fun MoldTheme(
     val dynamicColor = if (isDynamic == true) dynamicColor(isDarkTheme) else null
     val semanticColors = if (isDarkTheme) DarkMoldSemanticColors else LightMoldSemanticColors
     val windowAdaptiveInfo = currentWindowAdaptiveInfoV2()
-    TopAppBar()
     CompositionLocalProvider(
-        LocalMoldSemanticColors provides semanticColors,
+        LocalMoldSemanticColors provides semanticColors, LocalWindowWidthType provides windowAdaptiveInfo.windowSizeClass.windowWidthType()
     ) {
         MaterialTheme(
-            colorScheme = dynamicColor ?: (if (isDarkTheme) DarkColorScheme else LightColorScheme),
+            colorScheme = dynamicColor ?: rememberDynamicColorScheme(seedColor = seedColor, isDark = isDarkTheme),
             typography = MoldTypography,
             shapes = MoldDeckShapes,
             content = content,

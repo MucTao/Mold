@@ -1,6 +1,6 @@
 [versions]
 groupId = "com.github.MucTao"
-mold-version = "1.0.26"
+mold-version = "1.1.0"
 agp = "9.3.1"
 android-compileSdk = "37"
 android-minSdk = "23"
@@ -25,6 +25,7 @@ kotlinxSerialization = "1.11.0"
 ktor = "3.5.2"
 coil = "3.5.0"
 reorderable = "3.1.0"
+androidxNavigation3 = "1.1.1"
 
 [libraries]
 atomicfu = { module = "org.jetbrains.kotlinx:atomicfu", version.ref = "atomicfu" }
@@ -64,6 +65,11 @@ compose-material-icons = { group = "org.jetbrains.compose.material", name = "mat
 compose-components-resources = { group = "org.jetbrains.compose.components", name = "components-resources", version.ref = "composeMultiplatform" }
 compose-uiTooling = { group = "org.jetbrains.compose.ui", name = "ui-tooling", version.ref = "composeMultiplatform" }
 compose-uiToolingPreview = { group = "org.jetbrains.compose.ui", name = "ui-tooling-preview", version.ref = "composeMultiplatform" }
+
+androidx-navigation3-ui = { group = "org.jetbrains.androidx.navigation3", name = "navigation3-ui", version.ref = "androidxNavigation3" }
+androidx-compose-material3-adaptive-navigation3 = { group = "org.jetbrains.compose.material3.adaptive", name = "adaptive-navigation3", version = "1.3.0-beta02" }
+androidx-lifecycle-viewModel-navigation3 = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-navigation3", version.ref = "androidx-lifecycle" }
+materialKolor = { group = "com.materialkolor", name = "material-kolor", version = "5.0.0" }
 
 
 

@@ -2,10 +2,14 @@ package org.muc.ui.design
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import org.muc.ui.design.adaptive.LocalWindowWidthType
+import org.muc.ui.design.adaptive.WindowWidthType
 
 /**
  * 应用的语义色。
@@ -58,8 +62,20 @@ object MoldTheme {
         @Composable
         get() = MaterialTheme.colorScheme
 
+    val typography: Typography
+        @Composable
+        get() = MaterialTheme.typography
+
+    val shapes: Shapes
+        @Composable
+        get() = MaterialTheme.shapes
+
     /** [MoldTheme] 中当前的语义色。 */
     val semanticColors: MoldSemanticColors
         @Composable
         get() = LocalMoldSemanticColors.current
+
+    val windowWidthType: WindowWidthType
+        @Composable
+        get() = LocalWindowWidthType.current
 }

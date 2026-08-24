@@ -243,7 +243,7 @@ private fun MoldBaseTextField(
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         Surface(
-            shape = RoundedCornerShape(cornerRadius.value),
+            shape = cornerRadius.shape,
             color = containerColor,
             border = border,
             modifier = Modifier.height(size.height),

@@ -19,6 +19,8 @@ enum class MoldButtonType {
     SUCCESS,
 
     NORMAL,
+
+    PRIMARY,
 }
 
 /**
@@ -34,6 +36,16 @@ enum class MoldButtonSize(
     val loaderSize: Dp,
     val contentSpacing: Dp,
 ) {
+
+    XLARGE(
+        height = 48.dp,
+        minWidth = 100.dp,
+        horizontalPadding = 16.dp,
+        iconSize = 22.dp,
+        loaderSize = 20.dp,
+        contentSpacing = 10.dp,
+    ),
+
     /** 大尺寸。 */
     LARGE(
         height = 40.dp,

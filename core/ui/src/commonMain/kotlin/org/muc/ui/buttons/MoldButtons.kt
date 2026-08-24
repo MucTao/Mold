@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -294,7 +292,7 @@ private fun MoldBaseButton(
     } else {
         Modifier.semantics { this.contentDescription = contentDescription }
     }
-    val shape = if (cornerRadius == MoldCornerRadius.CIRCLE) CircleShape else RoundedCornerShape(cornerRadius.value)
+    val shape = cornerRadius.shape
     Surface(
         shape = shape,
         color = containerColor,
@@ -420,6 +418,7 @@ private fun resolveButtonColors(
         MoldButtonType.DANGER -> MoldRed   // 危险色（ADB Deck 红色）
         MoldButtonType.SUCCESS -> MoldGreen // 成功色（ADB Deck 绿色）
         MoldButtonType.NORMAL -> MaterialTheme.colorScheme.onSurface
+        MoldButtonType.PRIMARY -> MaterialTheme.colorScheme.primary
     }
 
     val disabledContent = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) // 禁用态内容色
@@ -469,6 +468,7 @@ private fun resolveButtonColors(
 @Composable
 private fun buttonTextStyle(size: MoldButtonSize): TextStyle {
     return when (size) {
+        MoldButtonSize.XLARGE -> MaterialTheme.typography.titleLarge // 大尺寸
         MoldButtonSize.LARGE -> MaterialTheme.typography.labelLarge // 大尺寸
         MoldButtonSize.MEDIUM -> MaterialTheme.typography.labelMedium // 中尺寸
         MoldButtonSize.SMALL -> MaterialTheme.typography.labelSmall // 小尺寸
