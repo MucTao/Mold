@@ -193,7 +193,7 @@ fun ActionView(actionManager: ActionManager) {
                 dismissAction = if (onConfirmAction != null) MoldAlertDialogAction(
                     text = stringResource(MoldCommonStringRes.actionCancel),
                     onClick = actionManager::onCancelAction,
-                    type = MoldButtonType.NEUTRAL,
+                    type = MoldButtonType.PRIMARY,
                     size = MoldButtonSize.MEDIUM,
                 ) else null,
             ) {
@@ -275,7 +275,6 @@ private fun <E> ActionRequestAlertDialog(
         dismissAction = MoldAlertDialogAction(
             text = stringResource(MoldCommonStringRes.actionCancel),
             onClick = actionManager::onCancelAction,
-            type = MoldButtonType.NEUTRAL,
             size = MoldButtonSize.MEDIUM,
         ),
     ) {
@@ -360,9 +359,7 @@ private fun <E> ActionRequestDialog(
                 MoldOutlinedButton(
                     onClick = actionManager::onCancelAction,
                     text = stringResource(MoldCommonStringRes.actionCancel),
-                    type = MoldButtonType.NEUTRAL,
                     size = MoldButtonSize.MEDIUM,
-
                     )
                 val onConfirmAction = action.onConfirmAction
                 MoldFilledButton(
@@ -442,7 +439,7 @@ private fun ActionRequestDialogTips(
                 MoldOutlinedButton(
                     onClick = actionManager::onCancelAction,
                     text = stringResource(MoldCommonStringRes.actionCancel),
-                    type = if (onConfirmAction != null) MoldButtonType.NEUTRAL else action.type,
+                    type = if (onConfirmAction != null) MoldButtonType.PRIMARY else action.type,
                     size = MoldButtonSize.MEDIUM,
                 )
                 if (onConfirmAction != null)
