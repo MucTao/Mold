@@ -4,7 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import org.muc.ui.design.MucCornerRadius
+import org.muc.ui.design.MoldCornerRadius
 
 @Composable
 fun CompactTextField(
@@ -15,14 +15,14 @@ fun CompactTextField(
     modifier: Modifier = Modifier,
 ) {
     if (suggestions.isEmpty()) {
-        MucOutlinedTextField(
+        MoldOutlinedTextField(
             value = value,
             onValueChange = onValueChange,
             modifier = modifier,
             placeholder = placeholder,
-            type = MucTextFieldType.NEUTRAL,
-            size = MucTextFieldSize.MEDIUM,
-            cornerRadius = MucCornerRadius.LARGE,
+            type = MoldTextFieldType.NEUTRAL,
+            size = MoldTextFieldSize.MEDIUM,
+            cornerRadius = MoldCornerRadius.LARGE,
             leadingIcon = null,
             trailingIcon = if (value.isNotEmpty()) Icons.Outlined.Close else null,
             onTrailingIconClick = if (value.isNotEmpty()) {
@@ -33,16 +33,16 @@ fun CompactTextField(
             singleLine = true,
         )
     } else {
-        MucOutlinedAutocompleteTextField(
+        MoldOutlinedAutocompleteTextField(
             value = value,
             onValueChange = onValueChange,
-            suggestions = suggestions.map { MucDropdownOption(it, it) },
+            suggestions = suggestions.map { MoldDropdownOption(it, it) },
             onSuggestionSelected = onValueChange,
             modifier = modifier,
             placeholder = placeholder,
-            type = MucTextFieldType.NEUTRAL,
-            size = MucTextFieldSize.MEDIUM,
-            cornerRadius = MucCornerRadius.LARGE,
+            type = MoldTextFieldType.NEUTRAL,
+            size = MoldTextFieldSize.MEDIUM,
+            cornerRadius = MoldCornerRadius.LARGE,
             trailingIcon = if (value.isNotEmpty()) Icons.Outlined.Close else null,
             onTrailingIconClick = if (value.isNotEmpty()) {
                 { onValueChange("") }
@@ -59,11 +59,11 @@ fun CompactTreeTextField(
     value: String,
     onValueChange: (String) -> Unit,
     placeholder: String,
-    suggestions: List<MucTreeDropdownOption<String>> = emptyList(),
+    suggestions: List<MoldTreeDropdownOption<String>> = emptyList(),
     onlyLeaf: Boolean = true,
     modifier: Modifier = Modifier,
 ) {
-    MucOutlinedAutocompleteTreeTextField(
+    MoldOutlinedAutocompleteTreeTextField(
         value = value,
         onValueChange = onValueChange,
         suggestions = suggestions,
@@ -71,9 +71,9 @@ fun CompactTreeTextField(
         onlyLeaf = onlyLeaf,
         modifier = modifier,
         placeholder = placeholder,
-        type = MucTextFieldType.NEUTRAL,
-        size = MucTextFieldSize.MEDIUM,
-        cornerRadius = MucCornerRadius.LARGE,
+        type = MoldTextFieldType.NEUTRAL,
+        size = MoldTextFieldSize.MEDIUM,
+        cornerRadius = MoldCornerRadius.LARGE,
         trailingIcon = if (value.isNotEmpty()) Icons.Outlined.Close else null,
         onTrailingIconClick = if (value.isNotEmpty()) {
             { onValueChange("") }

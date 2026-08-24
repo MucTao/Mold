@@ -1,11 +1,11 @@
 package org.muc.ui.action
 
 import androidx.compose.runtime.Composable
-import org.muc.ui.i18n.MucCommonStringRes
-import org.muc.ui.alertdialogs.MucAlertDialog
-import org.muc.ui.alertdialogs.MucAlertDialogAction
-import org.muc.ui.buttons.MucButtonSize
-import org.muc.ui.buttons.MucButtonType
+import org.muc.ui.i18n.MoldCommonStringRes
+import org.muc.ui.alertdialogs.MoldAlertDialog
+import org.muc.ui.alertdialogs.MoldAlertDialogAction
+import org.muc.ui.buttons.MoldButtonSize
+import org.muc.ui.buttons.MoldButtonType
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -13,22 +13,22 @@ fun ConfirmDialog(
     title: String? = null,
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
-    type: MucButtonType = MucButtonType.NEUTRAL,
+    type: MoldButtonType = MoldButtonType.NEUTRAL,
     content: @Composable () -> Unit,
 ) {
-    MucAlertDialog(
+    MoldAlertDialog(
         onDismissRequest = onDismiss,
         title = title ?: "",
-        confirmAction = MucAlertDialogAction(
-            text = stringResource(MucCommonStringRes.actionConfirm),
+        confirmAction = MoldAlertDialogAction(
+            text = stringResource(MoldCommonStringRes.actionConfirm),
             onClick = onConfirm,
-            size = MucButtonSize.MEDIUM,
+            size = MoldButtonSize.MEDIUM,
         ),
-        dismissAction = MucAlertDialogAction(
-            text = stringResource(MucCommonStringRes.actionCancel),
+        dismissAction = MoldAlertDialogAction(
+            text = stringResource(MoldCommonStringRes.actionCancel),
             onClick = onDismiss,
             type = type,
-            size = MucButtonSize.MEDIUM,
+            size = MoldButtonSize.MEDIUM,
         )
     ) {
         content()

@@ -5,26 +5,26 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 
 // ────────────────────────────────────────────────────────────────
-// Muc 基础色彩调色板
+// Mold 基础色彩调色板
 // ────────────────────────────────────────────────────────────────
 
 /** 主色调 —— 饱和蓝色 */
-val MucBlue = Color(0xFF1976D2)
+val MoldBlue = Color(0xFF1976D2)
 
 /** 次要颜色 */
-val MucTeal = Color(0xFF00897B)
+val MoldTeal = Color(0xFF00897B)
 
 /** 错误颜色 */
-val MucRed = Color(0xFFD32F2F)
+val MoldRed = Color(0xFFD32F2F)
 
 /** 成功颜色 */
-val MucGreen = Color(0xFF388E3C)
+val MoldGreen = Color(0xFF388E3C)
 
 /** 禁用颜色 */
-val MucGray = Color(0xFFBDBDBD)
+val MoldGray = Color(0xFFBDBDBD)
 
 /** 警告颜色 */
-val MucAmber = Color(0xFFF57C00)
+val MoldAmber = Color(0xFFF57C00)
 
 // ────────────────────────────────────────────────────────────────
 // 浅色主题
@@ -32,17 +32,17 @@ val MucAmber = Color(0xFFF57C00)
 
 /** 浅色主题的 ColorScheme。 */
 val LightColorScheme = lightColorScheme(
-    primary = MucBlue,
+    primary = MoldBlue,
     onPrimary = Color.White,
     primaryContainer = Color(0xFFBBDEFB),
     onPrimaryContainer = Color(0xFF0D47A1),
 
-    secondary = MucTeal,
+    secondary = MoldTeal,
     onSecondary = Color.White,
     secondaryContainer = Color(0xFFB2DFDB),
     onSecondaryContainer = Color(0xFF004D40),
 
-    error = MucRed,
+    error = MoldRed,
     onError = Color.White,
 
     background = Color(0xFFF5F5F5),
@@ -54,7 +54,7 @@ val LightColorScheme = lightColorScheme(
     surfaceVariant = Color(0xFFE8EAF6),
     onSurfaceVariant = Color(0xFF424242),
 
-    outline = MucGray,
+    outline = MoldGray,
 )
 
 // ────────────────────────────────────────────────────────────────

@@ -29,24 +29,6 @@ object Dimensions {
     /** 超大间距 (32 dp)。 */
     val paddingXLarge = 32.dp
 
-    // ── 元素尺寸 ──────────────────────────────────────
-    /** 侧边栏宽度。 */
-    val sidebarWidth = 220.dp
-
-    /** 顶部栏高度。 */
-    val topBarHeight = 48.dp
-
-    /** 状态栏高度。 */
-    val statusBarHeight = 28.dp
-
-    /** 侧边菜单项高度。 */
-    val navItemHeight = 44.dp
-
-    /** 卡片圆角半径。 */
-    val cardCornerRadius = MucCornerRadius.LARGE.value
-
-    /** 按钮和标签圆角半径。 */
-    val buttonCornerRadius = MucCornerRadius.MEDIUM.value
 
     // ── 图标 ────────────────────────────────────────────────
     /** 紧凑图标（例如表格/列表行中的图标）。 */

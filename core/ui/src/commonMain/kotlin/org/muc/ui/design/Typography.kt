@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.sp
  * 使用系统字体。macOS 上为 SF Pro，Windows 上为 Segoe UI，
  * Linux 上为 Ubuntu/Noto Sans。
  */
-val MucTypography = Typography(
+val MoldTypography = Typography(
     headlineLarge = TextStyle(
         fontWeight = FontWeight.SemiBold,
         fontSize = 28.sp,

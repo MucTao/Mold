@@ -7,7 +7,7 @@
             android:name="org.muc.datakv.ShareProvider"
             android:authorities="org.muc.content.provider.ShareProvider"
             android:exported="true"
-            android:process=":MucShareProvider" />
+            android:process=":MoldShareProvider" />
     </application>
 
 </manifest>

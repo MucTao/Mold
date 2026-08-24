@@ -18,8 +18,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import org.muc.ui.design.Dimensions
-import org.muc.ui.design.MucCornerRadius
-import org.muc.ui.design.MucTheme
+import org.muc.ui.design.MoldCornerRadius
+import org.muc.ui.design.MoldTheme
 
 @Composable
 private fun PreviewSection(
@@ -37,8 +37,8 @@ private fun PreviewSection(
 }
 
 @Composable
-private fun MucButtonsPreviewContent(isDarkTheme: Boolean) {
-    MucTheme(isDarkTheme = isDarkTheme) {
+private fun MoldButtonsPreviewContent(isDarkTheme: Boolean) {
+    MoldTheme(isDarkTheme = isDarkTheme) {
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(
                 modifier = Modifier
@@ -48,30 +48,30 @@ private fun MucButtonsPreviewContent(isDarkTheme: Boolean) {
             ) {
                 PreviewSection(title = "Filled") {
                     Row(horizontalArrangement = Arrangement.spacedBy(Dimensions.paddingSmall)) {
-                        MucFilledButton(
+                        MoldFilledButton(
                             onClick = {},
                             text = "下载",
-                            type = MucButtonType.NEUTRAL,
+                            type = MoldButtonType.NEUTRAL,
                             leadingIcon = Icons.Outlined.Download,
                         )
-                        MucFilledButton(
+                        MoldFilledButton(
                             onClick = {},
                             text = "删除",
-                            type = MucButtonType.DANGER,
+                            type = MoldButtonType.DANGER,
                             leadingIcon = Icons.Outlined.Delete,
                         )
-                        MucFilledButton(
+                        MoldFilledButton(
                             onClick = {},
                             text = "完成",
-                            type = MucButtonType.SUCCESS,
+                            type = MoldButtonType.SUCCESS,
                             trailingIcon = Icons.Outlined.Check,
                         )
-                        MucFilledButton(
+                        MoldFilledButton(
                             onClick = {},
                             text = "加载中",
                             loading = true,
                         )
-                        MucFilledButton(
+                        MoldFilledButton(
                             onClick = {},
                             enabled = false,
                             leadingIcon = Icons.Outlined.PlayArrow,
@@ -82,20 +82,20 @@ private fun MucButtonsPreviewContent(isDarkTheme: Boolean) {
 
                 PreviewSection(title = "Outlined") {
                     Row(horizontalArrangement = Arrangement.spacedBy(Dimensions.paddingSmall)) {
-                        MucOutlinedButton(
+                        MoldOutlinedButton(
                             onClick = {},
                             text = "播放",
                             leadingIcon = Icons.Outlined.PlayArrow,
                         )
-                        MucOutlinedButton(
+                        MoldOutlinedButton(
                             onClick = {},
                             text = "重试",
-                            type = MucButtonType.DANGER,
+                            type = MoldButtonType.DANGER,
                             loading = true,
                         )
-                        MucOutlinedButton(
+                        MoldOutlinedButton(
                             onClick = {},
-                            type = MucButtonType.SUCCESS,
+                            type = MoldButtonType.SUCCESS,
                             leadingIcon = Icons.Outlined.Check,
                             contentDescription = "Success icon",
                         )
@@ -104,20 +104,20 @@ private fun MucButtonsPreviewContent(isDarkTheme: Boolean) {
 
                 PreviewSection(title = "Plain") {
                     Row(horizontalArrangement = Arrangement.spacedBy(Dimensions.paddingSmall)) {
-                        MucPlainButton(
+                        MoldPlainButton(
                             onClick = {},
                             text = "下载",
                             leadingIcon = Icons.Outlined.Download,
                         )
-                        MucPlainButton(
+                        MoldPlainButton(
                             onClick = {},
                             text = "禁用",
-                            type = MucButtonType.DANGER,
+                            type = MoldButtonType.DANGER,
                             enabled = false,
                         )
-                        MucPlainButton(
+                        MoldPlainButton(
                             onClick = {},
-                            type = MucButtonType.SUCCESS,
+                            type = MoldButtonType.SUCCESS,
                             loading = true,
                             contentDescription = "Loading success icon",
                         )
@@ -129,29 +129,29 @@ private fun MucButtonsPreviewContent(isDarkTheme: Boolean) {
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(Dimensions.paddingSmall),
                     ) {
-                        MucFilledButton(
+                        MoldFilledButton(
                             onClick = {},
                             text = "L",
-                            size = MucButtonSize.LARGE,
-                            cornerRadius = MucCornerRadius.XLARGE,
+                            size = MoldButtonSize.LARGE,
+                            cornerRadius = MoldCornerRadius.XLARGE,
                         )
-                        MucFilledButton(
+                        MoldFilledButton(
                             onClick = {},
                             text = "M",
-                            size = MucButtonSize.MEDIUM,
-                            cornerRadius = MucCornerRadius.LARGE,
+                            size = MoldButtonSize.MEDIUM,
+                            cornerRadius = MoldCornerRadius.LARGE,
                         )
-                        MucFilledButton(
+                        MoldFilledButton(
                             onClick = {},
                             text = "S",
-                            size = MucButtonSize.SMALL,
-                            cornerRadius = MucCornerRadius.SMALL,
+                            size = MoldButtonSize.SMALL,
+                            cornerRadius = MoldCornerRadius.SMALL,
                         )
-                        MucFilledButton(
+                        MoldFilledButton(
                             onClick = {},
                             text = "XS",
-                            size = MucButtonSize.XSMALL,
-                            cornerRadius = MucCornerRadius.NONE,
+                            size = MoldButtonSize.XSMALL,
+                            cornerRadius = MoldCornerRadius.NONE,
                         )
                     }
                 }
@@ -162,12 +162,12 @@ private fun MucButtonsPreviewContent(isDarkTheme: Boolean) {
 
 @Preview
 @Composable
-private fun MucButtonsLightPreview() {
-    MucButtonsPreviewContent(isDarkTheme = false)
+private fun MoldButtonsLightPreview() {
+    MoldButtonsPreviewContent(isDarkTheme = false)
 }
 
 @Preview
 @Composable
-private fun MucButtonsDarkPreview() {
-    MucButtonsPreviewContent(isDarkTheme = true)
+private fun MoldButtonsDarkPreview() {
+    MoldButtonsPreviewContent(isDarkTheme = true)
 }

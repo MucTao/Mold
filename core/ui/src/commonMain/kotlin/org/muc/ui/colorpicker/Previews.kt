@@ -6,12 +6,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import org.muc.ui.design.MucTheme
+import org.muc.ui.design.MoldTheme
 
 
 @Composable
-private fun MucButtonsPreviewContent(isDarkTheme: Boolean) {
-    MucTheme(isDarkTheme = isDarkTheme) {
+private fun MoldButtonsPreviewContent(isDarkTheme: Boolean) {
+    MoldTheme(isDarkTheme = isDarkTheme) {
         Surface(modifier = Modifier.fillMaxSize()) {
             ColorPicker(
                 initialColor = Color.Green,
@@ -28,12 +28,12 @@ private fun MucButtonsPreviewContent(isDarkTheme: Boolean) {
 
 @Preview
 @Composable
-private fun MucButtonsLightPreview() {
-    MucButtonsPreviewContent(isDarkTheme = false)
+private fun MoldButtonsLightPreview() {
+    MoldButtonsPreviewContent(isDarkTheme = false)
 }
 
 @Preview
 @Composable
-private fun MucButtonsDarkPreview() {
-    MucButtonsPreviewContent(isDarkTheme = true)
+private fun MoldButtonsDarkPreview() {
+    MoldButtonsPreviewContent(isDarkTheme = true)
 }

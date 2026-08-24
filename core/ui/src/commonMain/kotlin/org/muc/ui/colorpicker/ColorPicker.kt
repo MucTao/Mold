@@ -27,11 +27,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import org.jetbrains.compose.resources.stringResource
-import org.muc.ui.buttons.MucButtonSize
-import org.muc.ui.buttons.MucFilledButton
-import org.muc.ui.buttons.MucOutlinedButton
+import org.muc.ui.buttons.MoldButtonSize
+import org.muc.ui.buttons.MoldFilledButton
+import org.muc.ui.buttons.MoldOutlinedButton
 import org.muc.ui.design.Dimensions
-import org.muc.ui.i18n.MucCommonStringRes
+import org.muc.ui.i18n.MoldCommonStringRes
 
 @Composable
 fun ColorPickerPopup(
@@ -158,16 +158,16 @@ fun ColorPicker(
                 .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            MucFilledButton(
+            MoldFilledButton(
                 onClick = { onColorConfirmed(state.toColor()) },
-                text = stringResource(MucCommonStringRes.actionConfirm),
-                size = MucButtonSize.SMALL
+                text = stringResource(MoldCommonStringRes.actionConfirm),
+                size = MoldButtonSize.SMALL
             )
 
-            MucOutlinedButton(
+            MoldOutlinedButton(
                 onClick = onCancel,
-                text = stringResource(MucCommonStringRes.actionCancel),
-                size = MucButtonSize.SMALL
+                text = stringResource(MoldCommonStringRes.actionCancel),
+                size = MoldButtonSize.SMALL
             )
         }
     }

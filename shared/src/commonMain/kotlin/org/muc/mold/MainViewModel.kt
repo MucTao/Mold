@@ -24,8 +24,8 @@ import org.muc.eventbus.utils.sendStackEvent
 import org.muc.ui.action.Action
 import org.muc.ui.action.ActionManagerImpl
 import org.muc.ui.action.ActionView
-import org.muc.ui.buttons.MucButtonType
-import org.muc.ui.image.MucImage
+import org.muc.ui.buttons.MoldButtonType
+import org.muc.ui.image.MoldImage
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -64,7 +64,7 @@ class MainViewModel : ViewModel() {
                         manager.onRequestAction(
                             Action.ActionRequestTips(
                                 msg = "确认action吗？",
-                                type = MucButtonType.NEUTRAL,
+                                type = MoldButtonType.NEUTRAL,
                                 onConfirmAction = {
                                     manager.onConfirmAction()
                                     viewModelScope.launch {
@@ -80,7 +80,7 @@ class MainViewModel : ViewModel() {
                         ActionView(manager)
                     },
                     InfoData.InfoItemData("image") {
-                        MucImage("https://saas.jf-r.com/pcweb/img/t1_1.png")
+                        MoldImage("https://saas.jf-r.com/pcweb/img/t1_1.png")
                     }
                 )
             )

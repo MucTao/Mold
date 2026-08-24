@@ -30,7 +30,7 @@ class ShareProvider : ContentProvider() {
         var AUTHORITY = "org.muc.content.provider.ShareProvider"
 
         @JvmStatic
-        var TABLE = "MucCP"
+        var TABLE = "MoldCP"
 
         val providerUri: Uri get() = Uri.parse("content://$AUTHORITY/$TABLE")
 
@@ -39,11 +39,11 @@ class ShareProvider : ContentProvider() {
         const val COLUMN_VALUE = "value" // DataStore的值
         private val URI_MATCHER by lazy {
             UriMatcher(UriMatcher.NO_MATCH).apply {
-                // Uri匹配码：匹配单个键（如content://AUTHORITY/MucCP/Key）
+                // Uri匹配码：匹配单个键（如content://AUTHORITY/MoldCP/Key）
                 addURI(AUTHORITY, "$TABLE/*", CODE_SINGLE_ITEM)
             }
         }
-        const val TAG = "MucCP"
+        const val TAG = "MoldCP"
 
         val observer by lazy {
             object : ContentObserver(Handler(Looper.getMainLooper())) {

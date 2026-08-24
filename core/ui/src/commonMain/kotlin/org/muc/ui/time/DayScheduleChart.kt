@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.sp
 import com.adbdeck.core.ui.time.minutes
 import kotlinx.datetime.LocalTime
 import org.muc.ui.design.Dimensions
-import org.muc.ui.design.MucGreen
+import org.muc.ui.design.MoldGreen
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -46,7 +46,7 @@ import kotlin.math.sin
 fun DayScheduleChart(
     intervals: List<ClosedRange<LocalTime>>,
     modifier: Modifier = Modifier,
-    active: Pair<String, Color> = "" to MucGreen, // 选中的颜色
+    active: Pair<String, Color> = "" to MoldGreen, // 选中的颜色
     inactive: Pair<String, Color> = "" to MaterialTheme.colorScheme.surfaceContainerHighest, // 未选中颜色
     textColor: Color = MaterialTheme.colorScheme.onSurfaceVariant // 文字和刻度的颜色
 ) {

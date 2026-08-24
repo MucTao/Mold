@@ -43,21 +43,21 @@ import com.adbdeck.core.ui.time.TimeRangePickerDialog
 import com.adbdeck.core.ui.time.isShow
 import com.adbdeck.core.ui.time.show
 import kotlinx.datetime.LocalTime
-import org.muc.ui.buttons.MucButtonSize
-import org.muc.ui.buttons.MucButtonType
-import org.muc.ui.buttons.MucFilledButton
-import org.muc.ui.buttons.MucOutlinedButton
+import org.muc.ui.buttons.MoldButtonSize
+import org.muc.ui.buttons.MoldButtonType
+import org.muc.ui.buttons.MoldFilledButton
+import org.muc.ui.buttons.MoldOutlinedButton
 import org.muc.ui.design.Dimensions
-import org.muc.ui.design.MucCornerRadius
-import org.muc.ui.design.MucGreen
-import org.muc.ui.textfields.MucOutlinedTextField
-import org.muc.ui.textfields.MucTextFieldSize
-import org.muc.ui.textfields.MucTextFieldType
+import org.muc.ui.design.MoldCornerRadius
+import org.muc.ui.design.MoldGreen
+import org.muc.ui.textfields.MoldOutlinedTextField
+import org.muc.ui.textfields.MoldTextFieldSize
+import org.muc.ui.textfields.MoldTextFieldType
 
 data class DaySchedule(
     val id: String? = null,
     val name: String? = null,
-    val color: Color = MucGreen,
+    val color: Color = MoldGreen,
     val time: List<TimeRange> = emptyList(),
 )
 
@@ -161,14 +161,14 @@ fun DaySchedulePickerDialog(
                                         }
                                     }
                                 }
-                                MucOutlinedTextField(
+                                MoldOutlinedTextField(
                                     value = name,
                                     onValueChange = onValueChange,
                                     modifier = Modifier.width(230.dp),
                                     placeholder = "请输入",
-                                    type = MucTextFieldType.NEUTRAL,
-                                    size = MucTextFieldSize.MEDIUM,
-                                    cornerRadius = MucCornerRadius.LARGE,
+                                    type = MoldTextFieldType.NEUTRAL,
+                                    size = MoldTextFieldSize.MEDIUM,
+                                    cornerRadius = MoldCornerRadius.LARGE,
                                     leadingIcon = null,
                                     trailingIcon = if (name.isNotEmpty()) Icons.Outlined.Close else null,
                                     onTrailingIconClick = if (name.isNotEmpty()) {
@@ -206,14 +206,14 @@ fun DaySchedulePickerDialog(
                                     fontSize = 11.sp,
                                 )
                             )
-                            MucFilledButton(
+                            MoldFilledButton(
                                 onClick = { pickDialog.show(TimeRange(LocalTime(0, 0), LocalTime(0, 0)), -1) },
                                 enabled = !pickDialog.isShow,
                                 text = "添加时间段",
                                 loading = pickDialog.isShow,
                                 leadingIcon = Icons.Filled.Add,
                                 contentDescription = "添加时间段",
-                                size = MucButtonSize.SMALL,
+                                size = MoldButtonSize.SMALL,
                                 modifier = Modifier.padding(start = Dimensions.paddingSmall, end = Dimensions.paddingDefault),
                             )
                         }
@@ -265,13 +265,13 @@ fun DaySchedulePickerDialog(
                 horizontalArrangement = Arrangement.spacedBy(Dimensions.paddingMedium, Alignment.End),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                MucOutlinedButton(
+                MoldOutlinedButton(
                     onClick = state::hide,
                     text = "取消",
-                    type = MucButtonType.NEUTRAL,
-                    size = MucButtonSize.MEDIUM,
+                    type = MoldButtonType.NEUTRAL,
+                    size = MoldButtonSize.MEDIUM,
                 )
-                MucFilledButton(
+                MoldFilledButton(
                     onClick = {
                         if (schedule.time.isEmpty()) {
                             errorMessage = "请选择时间段"
@@ -281,8 +281,8 @@ fun DaySchedulePickerDialog(
                         }
                     },
                     text = "确定",
-                    type = MucButtonType.DANGER,
-                    size = MucButtonSize.MEDIUM,
+                    type = MoldButtonType.DANGER,
+                    size = MoldButtonSize.MEDIUM,
                 )
             }
         }

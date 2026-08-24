@@ -7,14 +7,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import org.muc.ui.design.MucTheme
+import org.muc.ui.design.MoldTheme
 
 @Composable
 private fun CoreUiPreviewContainer(
     isDarkTheme: Boolean,
     content: @Composable () -> Unit,
 ) {
-    MucTheme(isDarkTheme = isDarkTheme) {
+    MoldTheme(isDarkTheme = isDarkTheme) {
         Surface(modifier = Modifier.fillMaxSize()) {
             content()
         }

@@ -10,11 +10,11 @@ import androidx.compose.ui.unit.dp
 import kotlinx.datetime.*
 import org.jetbrains.compose.resources.stringResource
 import org.muc.ui.action.ConfirmDialog
-import org.muc.ui.buttons.MucButtonType
-import org.muc.ui.buttons.MucFilledButton
-import org.muc.ui.buttons.MucOutlinedButton
+import org.muc.ui.buttons.MoldButtonType
+import org.muc.ui.buttons.MoldFilledButton
+import org.muc.ui.buttons.MoldOutlinedButton
 import org.muc.ui.design.Dimensions
-import org.muc.ui.i18n.MucCommonStringRes
+import org.muc.ui.i18n.MoldCommonStringRes
 import kotlin.time.Clock
 import kotlin.time.Instant
 
@@ -154,20 +154,20 @@ fun DatePickerModal(
     DatePickerDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
-            MucFilledButton(
+            MoldFilledButton(
                 onClick = {
-                    val selectedDateMillis = dateRangePickerState.selectedDateMillis ?: return@MucFilledButton
+                    val selectedDateMillis = dateRangePickerState.selectedDateMillis ?: return@MoldFilledButton
                     onDateSelected(
                         Instant.fromEpochMilliseconds(selectedDateMillis)
                             .toLocalDateTime(TimeZone.currentSystemDefault()).date
                     )
                 },
-                text = stringResource(MucCommonStringRes.actionConfirm),
-                type = MucButtonType.NEUTRAL,
+                text = stringResource(MoldCommonStringRes.actionConfirm),
+                type = MoldButtonType.NEUTRAL,
             )
         },
         dismissButton = {
-            MucOutlinedButton(onClick = onDismiss, text = stringResource(MucCommonStringRes.actionCancel))
+            MoldOutlinedButton(onClick = onDismiss, text = stringResource(MoldCommonStringRes.actionCancel))
         }
     ) {
         DatePicker(
@@ -230,7 +230,7 @@ fun DateRangePickerModal(
     DatePickerDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
-            MucFilledButton(
+            MoldFilledButton(
                 onClick = {
                     val startMillis = dateRangePickerState.selectedStartDateMillis
                     val endMillis = dateRangePickerState.selectedEndDateMillis
@@ -242,12 +242,12 @@ fun DateRangePickerModal(
                         onRangeSelected(dates)
                     }
                 },
-                text = stringResource(MucCommonStringRes.actionConfirm),
-                type = MucButtonType.NEUTRAL,
+                text = stringResource(MoldCommonStringRes.actionConfirm),
+                type = MoldButtonType.NEUTRAL,
             )
         },
         dismissButton = {
-            MucOutlinedButton(onClick = onDismiss, text = stringResource(MucCommonStringRes.actionCancel))
+            MoldOutlinedButton(onClick = onDismiss, text = stringResource(MoldCommonStringRes.actionCancel))
         }
     ) {
         DateRangePicker(

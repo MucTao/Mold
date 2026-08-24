@@ -23,8 +23,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import org.muc.ui.buttons.MucFilledButton
-import org.muc.ui.design.MucCornerRadius
+import org.muc.ui.buttons.MoldFilledButton
+import org.muc.ui.design.MoldCornerRadius
 import org.muc.ui.floatdrag.DraggableContent
 
 val space = Arrangement.spacedBy(8.dp)
@@ -65,7 +65,7 @@ fun App() {
                 }
             }
             DraggableContent(BiasAlignment(0.9f, 0.9f)) {
-                MucFilledButton({}, text = "悬浮拖动按钮", cornerRadius = MucCornerRadius.CIRCLE)
+                MoldFilledButton({}, text = "悬浮拖动按钮", cornerRadius = MoldCornerRadius.CIRCLE)
             }
         }
     }

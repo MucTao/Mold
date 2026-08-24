@@ -28,21 +28,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import org.jetbrains.compose.resources.stringResource
-import org.muc.ui.alertdialogs.MucAlertDialog
-import org.muc.ui.alertdialogs.MucAlertDialogAction
-import org.muc.ui.banner.MucBanner
-import org.muc.ui.banner.MucBannerType
-import org.muc.ui.buttons.MucButtonSize
-import org.muc.ui.buttons.MucButtonType
-import org.muc.ui.buttons.MucFilledButton
-import org.muc.ui.buttons.MucOutlinedButton
+import org.muc.ui.alertdialogs.MoldAlertDialog
+import org.muc.ui.alertdialogs.MoldAlertDialogAction
+import org.muc.ui.banner.MoldBanner
+import org.muc.ui.banner.MoldBannerType
+import org.muc.ui.buttons.MoldButtonSize
+import org.muc.ui.buttons.MoldButtonType
+import org.muc.ui.buttons.MoldFilledButton
+import org.muc.ui.buttons.MoldOutlinedButton
 import org.muc.ui.design.Dimensions
-import org.muc.ui.i18n.MucCommonStringRes
+import org.muc.ui.i18n.MoldCommonStringRes
 
 sealed class Action(open val msg: @Composable () -> String) {
     data class ActionRequest<T>(
         override val msg: @Composable () -> String,
-        val type: MucButtonType,
+        val type: MoldButtonType,
         val onConfirmAction: ActionManager.(T) -> Unit,
         val default: T? = null,
         val errorMsg: MutableState<String?> = mutableStateOf(null),
@@ -50,7 +50,7 @@ sealed class Action(open val msg: @Composable () -> String) {
     ) : Action(msg) {
         constructor(
             msg: String,
-            type: MucButtonType,
+            type: MoldButtonType,
             onConfirmAction: ActionManager.(T) -> Unit,
             default: T? = null,
             errorMsg: MutableState<String?> = mutableStateOf(null),
@@ -60,7 +60,7 @@ sealed class Action(open val msg: @Composable () -> String) {
 
     data class ActionRequestDialog<T>(
         override val msg: @Composable () -> String,
-        val type: MucButtonType,
+        val type: MoldButtonType,
         val onConfirmAction: Pair<String?, ActionManager.(T) -> Unit>,
         val modifier: Modifier = Modifier,
         val default: T? = null,
@@ -69,7 +69,7 @@ sealed class Action(open val msg: @Composable () -> String) {
     ) : Action(msg) {
         constructor(
             msg: String,
-            type: MucButtonType,
+            type: MoldButtonType,
             onConfirmAction: Pair<String?, ActionManager.(T) -> Unit>,
             modifier: Modifier = Modifier,
             default: T? = null,
@@ -79,7 +79,7 @@ sealed class Action(open val msg: @Composable () -> String) {
 
         constructor(
             msg: String,
-            type: MucButtonType,
+            type: MoldButtonType,
             onConfirmAction: ActionManager.(T) -> Unit,
             modifier: Modifier = Modifier,
             default: T? = null,
@@ -90,13 +90,13 @@ sealed class Action(open val msg: @Composable () -> String) {
 
     data class ActionRequestTips(
         override val msg: @Composable () -> String,
-        val type: MucButtonType,
+        val type: MoldButtonType,
         val onConfirmAction: (() -> Unit)? = null,
         val content: (@Composable () -> Unit)? = null
     ) : Action(msg) {
         constructor(
             msg: String,
-            type: MucButtonType,
+            type: MoldButtonType,
             onConfirmAction: (() -> Unit)? = null,
             content: (@Composable () -> Unit)? = null
         ) : this({ msg }, type, onConfirmAction, content)
@@ -104,14 +104,14 @@ sealed class Action(open val msg: @Composable () -> String) {
 
     data class ActionRequestDialogTips(
         override val msg: @Composable () -> String,
-        val type: MucButtonType,
+        val type: MoldButtonType,
         val modifier: Modifier = Modifier,
         val onConfirmAction: Pair<String?, (() -> Unit)>? = null,
         val content: (@Composable () -> Unit)? = null
     ) : Action(msg) {
         constructor(
             msg: String,
-            type: MucButtonType,
+            type: MoldButtonType,
             modifier: Modifier = Modifier,
             onConfirmAction: Pair<String?, (() -> Unit)>? = null,
             content: (@Composable () -> Unit)? = null
@@ -119,7 +119,7 @@ sealed class Action(open val msg: @Composable () -> String) {
 
         constructor(
             msg: String,
-            type: MucButtonType,
+            type: MoldButtonType,
             modifier: Modifier = Modifier,
             onConfirmAction: (() -> Unit),
             content: (@Composable () -> Unit)? = null
@@ -127,12 +127,12 @@ sealed class Action(open val msg: @Composable () -> String) {
     }
 }
 
-sealed class ActionFeedback(open val msg: @Composable () -> String?, open val type: MucBannerType) {
-    data class ActionSuccess(override val msg: @Composable () -> String) : ActionFeedback(msg, MucBannerType.SUCCESS) {
+sealed class ActionFeedback(open val msg: @Composable () -> String?, open val type: MoldBannerType) {
+    data class ActionSuccess(override val msg: @Composable () -> String) : ActionFeedback(msg, MoldBannerType.SUCCESS) {
         constructor(msg: String) : this({ msg })
     }
 
-    data class ActionError(override val msg: @Composable () -> String?) : ActionFeedback(msg, MucBannerType.ERROR) {
+    data class ActionError(override val msg: @Composable () -> String?) : ActionFeedback(msg, MoldBannerType.ERROR) {
         constructor(msg: String?) : this({ msg })
     }
 }
@@ -169,29 +169,29 @@ fun ActionView(actionManager: ActionManager) {
 
         is Action.ActionRequestTips -> {
             val onConfirmAction = action.onConfirmAction
-            MucAlertDialog(
+            MoldAlertDialog(
                 onDismissRequest = actionManager::onCancelAction,
                 title = action.msg(),
-                confirmAction = if (onConfirmAction != null) MucAlertDialogAction(
-                    text = stringResource(MucCommonStringRes.actionConfirm),
+                confirmAction = if (onConfirmAction != null) MoldAlertDialogAction(
+                    text = stringResource(MoldCommonStringRes.actionConfirm),
                     onClick = {
                         actionManager.onConfirmAction()
                         onConfirmAction()
                     },
                     type = action.type,
-                    size = MucButtonSize.MEDIUM,
+                    size = MoldButtonSize.MEDIUM,
                     loading = state.isActionRunning,
-                ) else MucAlertDialogAction(
-                    text = stringResource(MucCommonStringRes.actionCancel),
+                ) else MoldAlertDialogAction(
+                    text = stringResource(MoldCommonStringRes.actionCancel),
                     onClick = actionManager::onCancelAction,
                     type = action.type,
-                    size = MucButtonSize.MEDIUM,
+                    size = MoldButtonSize.MEDIUM,
                 ),
-                dismissAction = if (onConfirmAction != null) MucAlertDialogAction(
-                    text = stringResource(MucCommonStringRes.actionCancel),
+                dismissAction = if (onConfirmAction != null) MoldAlertDialogAction(
+                    text = stringResource(MoldCommonStringRes.actionCancel),
                     onClick = actionManager::onCancelAction,
-                    type = MucButtonType.NEUTRAL,
-                    size = MucButtonSize.MEDIUM,
+                    type = MoldButtonType.NEUTRAL,
+                    size = MoldButtonSize.MEDIUM,
                 ) else null,
             ) {
                 action.content?.invoke()
@@ -209,14 +209,14 @@ fun ActionView(actionManager: ActionManager) {
     }
 
     state.feedback?.let { feedback ->
-        MucBanner(
+        MoldBanner(
             message = when (feedback) {
                 is ActionFeedback.ActionError -> {
                     val details = feedback.msg().orEmpty().trim()
                     if (details.isNotEmpty()) {
-                        stringResource(MucCommonStringRes.errorWithDetails, details)    // 带详情的错误提示
+                        stringResource(MoldCommonStringRes.errorWithDetails, details)    // 带详情的错误提示
                     } else {
-                        stringResource(MucCommonStringRes.errorUnknown)                 // 未知错误提示
+                        stringResource(MoldCommonStringRes.errorUnknown)                 // 未知错误提示
                     }
                 }
 
@@ -245,11 +245,11 @@ private fun <E> ActionRequestAlertDialog(
         }
     }
 
-    MucAlertDialog(
+    MoldAlertDialog(
         onDismissRequest = actionManager::onCancelAction,
         title = action.msg(),
-        confirmAction = MucAlertDialogAction(
-            text = stringResource(MucCommonStringRes.actionConfirm),
+        confirmAction = MoldAlertDialogAction(
+            text = stringResource(MoldCommonStringRes.actionConfirm),
             onClick = {
                 if (contentScope.errorMsg == null) {
                     val finalData = contentScope.data
@@ -263,15 +263,15 @@ private fun <E> ActionRequestAlertDialog(
                 }
             },
             type = action.type,
-            size = MucButtonSize.MEDIUM,
+            size = MoldButtonSize.MEDIUM,
             loading = isActionRunning,
             enabled = contentScope.errorMsg == null
         ),
-        dismissAction = MucAlertDialogAction(
-            text = stringResource(MucCommonStringRes.actionCancel),
+        dismissAction = MoldAlertDialogAction(
+            text = stringResource(MoldCommonStringRes.actionCancel),
             onClick = actionManager::onCancelAction,
-            type = MucButtonType.NEUTRAL,
-            size = MucButtonSize.MEDIUM,
+            type = MoldButtonType.NEUTRAL,
+            size = MoldButtonSize.MEDIUM,
         ),
     ) {
         contentScope.errorMsg?.let {
@@ -328,7 +328,7 @@ private fun <E> ActionRequestDialog(
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.Close,
-                        contentDescription = stringResource(MucCommonStringRes.actionClose),
+                        contentDescription = stringResource(MoldCommonStringRes.actionClose),
                         modifier = Modifier.size(18.dp),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -352,15 +352,15 @@ private fun <E> ActionRequestDialog(
                         )
                     )
                 }
-                MucOutlinedButton(
+                MoldOutlinedButton(
                     onClick = actionManager::onCancelAction,
-                    text = stringResource(MucCommonStringRes.actionCancel),
-                    type = MucButtonType.NEUTRAL,
-                    size = MucButtonSize.MEDIUM,
+                    text = stringResource(MoldCommonStringRes.actionCancel),
+                    type = MoldButtonType.NEUTRAL,
+                    size = MoldButtonSize.MEDIUM,
 
                     )
                 val onConfirmAction = action.onConfirmAction
-                MucFilledButton(
+                MoldFilledButton(
                     onClick = {
                         if (contentScope.errorMsg == null) {
                             val finalData = contentScope.data
@@ -371,9 +371,9 @@ private fun <E> ActionRequestDialog(
                             }
                         }
                     },
-                    text = onConfirmAction.first ?: stringResource(MucCommonStringRes.actionConfirm),
+                    text = onConfirmAction.first ?: stringResource(MoldCommonStringRes.actionConfirm),
                     type = action.type,
-                    size = MucButtonSize.MEDIUM,
+                    size = MoldButtonSize.MEDIUM,
                     loading = isActionRunning,
                     enabled = contentScope.errorMsg == null
                 )
@@ -419,7 +419,7 @@ private fun ActionRequestDialogTips(
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.Close,
-                        contentDescription = stringResource(MucCommonStringRes.actionClose),
+                        contentDescription = stringResource(MoldCommonStringRes.actionClose),
                         modifier = Modifier.size(18.dp),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -434,18 +434,18 @@ private fun ActionRequestDialogTips(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 val onConfirmAction = action.onConfirmAction
-                MucOutlinedButton(
+                MoldOutlinedButton(
                     onClick = actionManager::onCancelAction,
-                    text = stringResource(MucCommonStringRes.actionCancel),
-                    type = if (onConfirmAction != null) MucButtonType.NEUTRAL else action.type,
-                    size = MucButtonSize.MEDIUM,
+                    text = stringResource(MoldCommonStringRes.actionCancel),
+                    type = if (onConfirmAction != null) MoldButtonType.NEUTRAL else action.type,
+                    size = MoldButtonSize.MEDIUM,
                 )
                 if (onConfirmAction != null)
-                    MucFilledButton(
+                    MoldFilledButton(
                         onClick = onConfirmAction.second,
-                        text = onConfirmAction.first ?: stringResource(MucCommonStringRes.actionConfirm),
+                        text = onConfirmAction.first ?: stringResource(MoldCommonStringRes.actionConfirm),
                         type = action.type,
-                        size = MucButtonSize.MEDIUM,
+                        size = MoldButtonSize.MEDIUM,
                         loading = isActionRunning,
                     )
             }
