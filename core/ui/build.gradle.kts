@@ -57,7 +57,7 @@ kotlin {
             implementation(libs.coil.network.ktor)
             implementation(libs.ktor.client.core)
             api(libs.androidx.navigation3.ui)
-            implementation(libs.androidx.compose.material3.adaptive.navigation3)
+            api(libs.androidx.compose.material3.adaptive.navigation3)
             api(libs.androidx.lifecycle.viewModel.navigation3)
             api(libs.reorderable)
         }

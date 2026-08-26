@@ -12,9 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import coil3.compose.SubcomposeAsyncImage
+import com.materialkolor.ktx.themeColorOrNull
 import org.muc.ui.design.Dimensions
 import org.muc.ui.design.MoldTheme
 import org.muc.ui.status.LoadingView
@@ -26,6 +29,7 @@ fun MoldImage(
     icon: ImageVector = Icons.Outlined.Image,
     contentScale: ContentScale = ContentScale.Fit,
     contentDescription: String? = model?.toString(),
+    onSuccess: (ImageBitmap?, Color?) -> Unit
 ) {
     if (model == null) {
         ErrorPlaceholder(modifier, icon, null)
@@ -40,6 +44,11 @@ fun MoldImage(
         },
         loading = {
             LoadingView("图片加载中", Modifier.fillMaxSize().background(MoldTheme.colorScheme.surfaceVariant))
+        },
+        onSuccess = { state ->
+            val bitmap = state.result.image.toImageBitmap()
+            val suitableColors = bitmap?.themeColorOrNull()
+            onSuccess(bitmap, suitableColors)
         },
         contentScale = contentScale
     )
@@ -63,3 +72,5 @@ private fun ErrorPlaceholder(targetModifier: Modifier, icon: ImageVector = Icons
         }
     }
 }
+
+expect fun coil3.Image.toImageBitmap(): ImageBitmap?
