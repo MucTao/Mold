@@ -1,4 +1,5 @@
 @file:Suppress("unused")
+
 package org.muc.network.serializer
 
 import androidx.compose.ui.graphics.Color
@@ -15,18 +16,14 @@ object ColorSerializer : KSerializer<Color> {
         PrimitiveSerialDescriptor("ComposeColor", PrimitiveKind.STRING)
 
     override fun serialize(encoder: Encoder, value: Color) {
-        // 将 Color 转为十六进制字符串，例如 #FFA858
-        val argb: Int = value.toArgb()
-        val hex = argb.toHexColor()
-        encoder.encodeString(hex)
+        encoder.encodeString(colorToHexStr(value))
     }
 
     override fun deserialize(decoder: Decoder): Color {
-        val hex = decoder.decodeString()
-        return hexToColor(hex)
+        return hexStrToColor(decoder.decodeString())
     }
 
-    fun hexToColor(hex: String): Color {
+    fun hexStrToColor(hex: String): Color {
         return runCatching {
             if (hex.contains("#")) {
                 // 处理多种格式：#RRGGBB, #AARRGGBB, 或 RRGGBB
@@ -66,6 +63,10 @@ object ColorSerializer : KSerializer<Color> {
             Color.Gray
         }
     }
+
+
+    fun colorToHexStr(color: Color): String = color.toArgb().toHexColor()
+
 }
 
 fun Int.toHexColor(): String {

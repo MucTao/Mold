@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Image
+import androidx.compose.material.icons.outlined.ImageSearch
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -13,14 +14,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
+import coil3.compose.AsyncImage
+import coil3.compose.AsyncImagePainter.State
 import coil3.compose.SubcomposeAsyncImage
 import com.materialkolor.ktx.themeColorOrNull
 import org.muc.ui.design.Dimensions
 import org.muc.ui.design.MoldTheme
 import org.muc.ui.status.LoadingView
+
+private val cacheMap = HashMap<Any, Color>()
 
 @Composable
 fun MoldImage(
@@ -29,7 +36,40 @@ fun MoldImage(
     icon: ImageVector = Icons.Outlined.Image,
     contentScale: ContentScale = ContentScale.Fit,
     contentDescription: String? = model?.toString(),
-    onSuccess: ((ImageBitmap?, Color?) -> Unit)? = null
+    colorFilter: ColorFilter? = null,
+    onSeedColor: ((Color?) -> Unit)? = null
+) {
+    if (model == null) {
+        ErrorPlaceholder(modifier, icon, null)
+        return
+    }
+    AsyncImage(
+        model = model,
+        contentDescription = contentDescription,
+        placeholder = rememberVectorPainter(Icons.Outlined.ImageSearch),
+        error = rememberVectorPainter(icon),
+        onSuccess = { state ->
+            onSeedColor?.let { callback ->
+                callback(cacheMap[model] ?: state.result.image.toImageBitmap()?.themeColorOrNull()?.also {
+                    cacheMap[model] = it
+                })
+            }
+        },
+        colorFilter = colorFilter,
+        contentScale = contentScale,
+        modifier = modifier
+    )
+}
+
+@Composable
+fun MoldSubImage(
+    model: Any?,
+    modifier: Modifier = Modifier,
+    icon: ImageVector = Icons.Outlined.Image,
+    contentScale: ContentScale = ContentScale.Fit,
+    contentDescription: String? = model?.toString(),
+    colorFilter: ColorFilter? = null,
+    onSeedColor: ((Color?) -> Unit)? = null
 ) {
     if (model == null) {
         ErrorPlaceholder(modifier, icon, null)
@@ -46,12 +86,18 @@ fun MoldImage(
             LoadingView("图片加载中", Modifier.fillMaxSize().background(MoldTheme.colorScheme.surfaceVariant))
         },
         onSuccess = { state ->
-            onSuccess?.let {
-                val bitmap = state.result.image.toImageBitmap()
-                val suitableColors = bitmap?.themeColorOrNull()
-                it(bitmap, suitableColors)
+            onSeedColor?.let { callback ->
+                callback(cacheMap[model] ?: state.result.image.toImageBitmap()?.themeColorOrNull()?.also {
+                    cacheMap[model] = it
+                })
             }
         },
+        transform = {
+            if (it is State.Success) {
+                State.Success(it.painter, it.result)
+            } else it
+        },
+        colorFilter = colorFilter,
         contentScale = contentScale
     )
 }
