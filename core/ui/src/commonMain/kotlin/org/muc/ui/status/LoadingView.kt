@@ -14,10 +14,10 @@ import androidx.compose.ui.Modifier
 import org.muc.ui.design.Dimensions
 
 /**
- * Экран загрузки — отображается, пока данные еще загружаются.
+ * 加载界面，在数据加载期间显示。
  *
- * @param message Текстовое сообщение под индикатором (可选).
- * @param modifier Модификатор контейнера.
+ * @param message 指示器下方的文本消息（可选）。
+ * @param modifier 容器的 Modifier。
  */
 @Composable
 fun LoadingView(

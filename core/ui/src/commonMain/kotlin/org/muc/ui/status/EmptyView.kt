@@ -19,10 +19,10 @@ import androidx.compose.ui.text.style.TextAlign
 import org.muc.ui.design.Dimensions
 
 /**
- * Экран пустого состояния — отображается, когда данные загружены, но список пуст.
+ * 空状态界面，在数据已加载但列表为空时显示。
  *
- * @param message  Текстовое сообщение (например, "Нет подключенных устройств").
- * @param modifier Модификатор контейнера.
+ * @param message 文本消息（例如“没有已连接的设备”）。
+ * @param modifier 容器的 Modifier。
  */
 @Composable
 fun EmptyView(

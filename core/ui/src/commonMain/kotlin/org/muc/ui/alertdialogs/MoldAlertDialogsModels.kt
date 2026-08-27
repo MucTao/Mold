@@ -5,15 +5,15 @@ import org.muc.ui.buttons.MoldButtonSize
 import org.muc.ui.buttons.MoldButtonType
 
 /**
- * Конфигурация action-кнопки для [MoldAlertDialog].
+ * [MoldAlertDialog] 的操作按钮配置。
  *
- * @param text Текст кнопки.
- * @param onClick Callback нажатия.
- * @param enabled Флаг доступности.
- * @param loading Показывать loader внутри кнопки.
- * @param type Цветовой тип кнопки.
- * @param size Размер кнопки.
- * @param cornerRadius Радиус скругления.
+ * @param text 按钮文本。
+ * @param onClick 点击回调。
+ * @param enabled 是否可用。
+ * @param loading 是否在按钮内显示加载指示器。
+ * @param type 按钮的颜色类型。
+ * @param size 按钮尺寸。
+ * @param cornerRadius 圆角半径。
  */
 data class MoldAlertDialogAction(
     val text: String,

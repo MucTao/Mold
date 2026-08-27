@@ -9,10 +9,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 /**
- * Размер segmented-кнопок.
+ * 分段按钮的尺寸。
  *
- * Размеры синхронизированы с [com.adbdeck.core.ui.splitbuttons.MoldSplitButtonSize],
- * чтобы элементы управления выглядели единообразно.
+ * 尺寸与 [com.adbdeck.core.ui.splitbuttons.MoldSplitButtonSize] 保持同步，
+ * 以确保控件外观一致。
  */
 enum class MoldSegmentedButtonSize(
     val height: Dp,
@@ -20,7 +20,7 @@ enum class MoldSegmentedButtonSize(
     val minWidth: Dp,
     val indicatorSize: Dp,
 ) {
-    /** Крупный размер. */
+    /** 大尺寸。 */
     LARGE(
         height = 40.dp,
         horizontalPadding = 14.dp,
@@ -28,7 +28,7 @@ enum class MoldSegmentedButtonSize(
         indicatorSize = 8.dp,
     ),
 
-    /** Средний размер. */
+    /** 中等尺寸。 */
     MEDIUM(
         height = 34.dp,
         horizontalPadding = 12.dp,
@@ -36,7 +36,7 @@ enum class MoldSegmentedButtonSize(
         indicatorSize = 7.dp,
     ),
 
-    /** Малый размер. */
+    /** 小尺寸。 */
     SMALL(
         height = 30.dp,
         horizontalPadding = 10.dp,
@@ -44,7 +44,7 @@ enum class MoldSegmentedButtonSize(
         indicatorSize = 6.dp,
     ),
 
-    /** Очень компактный размер. */
+    /** 超小尺寸。 */
     XSMALL(
         height = 26.dp,
         horizontalPadding = 8.dp,
@@ -54,15 +54,15 @@ enum class MoldSegmentedButtonSize(
 }
 
 /**
- * Опция segmented-контрола.
+ * 分段控件的选项。
  *
- * @param value Бизнес-значение опции.
- * @param label Текст сегмента.
- * @param leadingIcon Иконка сегмента (可选).
- * @param enabled Доступность опции.
- * @param contentColor Опциональный цвет контента (иконка/текст) для конкретной опции.
- * @param indicatorColor Опциональный цвет точки слева от подписи.
- * @param contentDescription Текст для accessibility. Если `null`, используется [label].
+ * @param value 选项的业务值。
+ * @param label 分段文本。
+ * @param leadingIcon 分段图标（可选）。
+ * @param enabled 选项是否可用。
+ * @param contentColor 指定选项的可选内容颜色（图标/文本）。
+ * @param indicatorColor 标签左侧圆点的可选颜色。
+ * @param contentDescription 无障碍说明文本。为 `null` 时使用 [label]。
  */
 @Immutable
 data class MoldSegmentedOption<T>(
@@ -76,7 +76,7 @@ data class MoldSegmentedOption<T>(
 )
 
 /**
- * Цвета segmented-контрола.
+ * 分段控件的颜色。
  */
 @Immutable
 data class MoldSegmentedButtonColors(
@@ -89,11 +89,11 @@ data class MoldSegmentedButtonColors(
 )
 
 /**
- * Дефолты segmented-контрола.
+ * 分段控件的默认值。
  */
 object MoldSegmentedButtonDefaults {
     /**
-     * Цветовая схема segmented-контрола.
+     * 分段控件的配色方案。
      */
     @Composable
     fun colors(

@@ -41,18 +41,18 @@ import org.muc.ui.design.MoldCornerRadius
 import org.muc.ui.design.MoldTheme
 
 /**
- * Универсальный single-choice segmented-контрол.
+ * 通用的单选分段控件。
  *
- * Используется там, где может быть выбран только один вариант
- * (например, `Compact/Full`).
+ * 用于只能选择一个选项的场景
+ *（例如 `Compact/Full`）。
  *
- * @param options Набор опций.
- * @param selectedValue Текущее выбранное значение.
- * @param onValueSelected Callback выбора опции.
- * @param modifier Modifier контейнера.
- * @param size Размер сегментов.
- * @param cornerRadius Радиус скругления внешних углов компонента.
- * @param colors Цветовая схема компонента.
+ * @param options 选项集合。
+ * @param selectedValue 当前选中的值。
+ * @param onValueSelected 选项选择回调。
+ * @param modifier 容器的 Modifier。
+ * @param size 分段尺寸。
+ * @param cornerRadius 组件外侧圆角半径。
+ * @param colors 组件的配色方案。
  */
 @Composable
 fun <T> MoldSingleSegmentedButtons(

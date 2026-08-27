@@ -68,11 +68,11 @@ enum class MoldTextFieldSize(
 }
 
 /**
- * Опция выпадающего списка для dropdown text field.
+ * 下拉文本输入框的下拉列表选项。
  *
- * @param value Бизнес-значение опции.
- * @param label Текст, отображаемый в поле и в меню.
- * @param enabled Доступность опции в меню.
+ * @param value 选项的业务值。
+ * @param label 在输入框和菜单中显示的文本。
+ * @param enabled 菜单中的选项是否可用。
  */
 @Immutable
 data class MoldDropdownOption<T>(

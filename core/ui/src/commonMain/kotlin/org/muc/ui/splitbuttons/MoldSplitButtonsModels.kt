@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 /**
- * Размер split-button.
+ * 拆分按钮的尺寸。
  */
 enum class MoldSplitButtonSize(
     val height: Dp,
@@ -16,7 +16,7 @@ enum class MoldSplitButtonSize(
     val menuPartWidth: Dp,
     val iconSize: Dp,
 ) {
-    /** Крупный размер. */
+    /** 大尺寸。 */
     LARGE(
         height = 40.dp,
         horizontalPadding = 14.dp,
@@ -24,7 +24,7 @@ enum class MoldSplitButtonSize(
         iconSize = 18.dp,
     ),
 
-    /** Средний размер. */
+    /** 中等尺寸。 */
     MEDIUM(
         height = 34.dp,
         horizontalPadding = 12.dp,
@@ -32,7 +32,7 @@ enum class MoldSplitButtonSize(
         iconSize = 16.dp,
     ),
 
-    /** Малый размер. */
+    /** 小尺寸。 */
     SMALL(
         height = 30.dp,
         horizontalPadding = 10.dp,
@@ -40,7 +40,7 @@ enum class MoldSplitButtonSize(
         iconSize = 14.dp,
     ),
 
-    /** Очень компактный размер. */
+    /** 超小尺寸。 */
     XSMALL(
         height = 26.dp,
         horizontalPadding = 8.dp,
@@ -50,11 +50,11 @@ enum class MoldSplitButtonSize(
 }
 
 /**
- * Пункт выпадающего меню split-button.
+ * 拆分按钮的下拉菜单项。
  *
- * @param value Бизнес-значение пункта меню.
- * @param label Текст пункта меню.
- * @param enabled Доступность пункта меню.
+ * @param value 菜单项的业务值。
+ * @param label 菜单项文本。
+ * @param enabled 菜单项是否可用。
  */
 @Immutable
 data class MoldSplitMenuItem<T>(
@@ -64,7 +64,7 @@ data class MoldSplitMenuItem<T>(
 )
 
 /**
- * Цвета split-button.
+ * 拆分按钮的颜色。
  */
 @Immutable
 data class MoldSplitButtonColors(
@@ -76,11 +76,11 @@ data class MoldSplitButtonColors(
 )
 
 /**
- * Набор дефолтов для split-button.
+ * 拆分按钮的默认值集合。
  */
 object MoldSplitButtonDefaults {
     /**
-     * Цветовая схема split-button.
+     * 拆分按钮的配色方案。
      */
     @Composable
     fun colors(

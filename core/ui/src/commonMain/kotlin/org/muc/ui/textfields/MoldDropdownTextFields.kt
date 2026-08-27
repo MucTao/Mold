@@ -29,23 +29,23 @@ import androidx.compose.ui.text.style.TextOverflow
 import org.muc.ui.design.MoldCornerRadius
 
 /**
- * Выпадающее поле ввода со стилем `filled`.
+ * `filled` 样式的下拉输入框。
  *
- * API выровнен с [MoldOutlinedDropdownTextField] и [MoldPlainDropdownTextField]
- * для взаимозаменяемости по месту использования.
+ * API 与 [MoldOutlinedDropdownTextField] 和 [MoldPlainDropdownTextField] 保持一致，
+ * 以便在使用处相互替换。
  *
- * @param options Опции выпадающего списка.
- * @param selectedValue Текущее выбранное бизнес-значение.
- * @param onValueSelected Callback выбора опции.
- * @param modifier Modifier контейнера.
- * @param placeholder Placeholder для пустого значения.
- * @param type Цветовой тип поля (`NEUTRAL/DANGER/SUCCESS`).
- * @param size Размер поля.
- * @param cornerRadius Радиус скругления.
- * @param enabled Доступность поля.
- * @param leadingIcon Иконка слева.
- * @param supportingText Текст под полем (подсказка/ошибка).
- * @param showSelectedCheckmark Показывать отметку у выбранной опции.
+ * @param options 下拉列表选项。
+ * @param selectedValue 当前选中的业务值。
+ * @param onValueSelected 选项选择回调。
+ * @param modifier 容器的 Modifier。
+ * @param placeholder 空值时的占位文本。
+ * @param type 输入框的颜色类型（`NEUTRAL/DANGER/SUCCESS`）。
+ * @param size 输入框尺寸。
+ * @param cornerRadius 圆角半径。
+ * @param enabled 输入框是否可用。
+ * @param leadingIcon 左侧图标。
+ * @param supportingText 输入框下方的文本（提示/错误）。
+ * @param showSelectedCheckmark 是否在已选选项旁显示勾选标记。
  */
 @Composable
 fun <T> MoldFilledDropdownTextField(
@@ -80,9 +80,9 @@ fun <T> MoldFilledDropdownTextField(
 }
 
 /**
- * Выпадающее поле ввода со стилем `outlined`.
+ * `outlined` 样式的下拉输入框。
  *
- * API выровнен с [MoldFilledDropdownTextField] и [MoldPlainDropdownTextField].
+ * API 与 [MoldFilledDropdownTextField] 和 [MoldPlainDropdownTextField] 保持一致。
  */
 @Composable
 fun <T> MoldOutlinedDropdownTextField(
@@ -117,9 +117,9 @@ fun <T> MoldOutlinedDropdownTextField(
 }
 
 /**
- * Выпадающее поле ввода со стилем `plain`.
+ * `plain` 样式的下拉输入框。
  *
- * API выровнен с [MoldFilledDropdownTextField] и [MoldOutlinedDropdownTextField].
+ * API 与 [MoldFilledDropdownTextField] 和 [MoldOutlinedDropdownTextField] 保持一致。
  */
 @Composable
 fun <T> MoldPlainDropdownTextField(
@@ -244,7 +244,7 @@ private fun <T> MoldBaseDropdownTextField(
             )
         }
 
-        // Открываем меню кликом по всей области поля, а не только по стрелке.
+        // 点击输入框的整个区域都可打开菜单，而不只是点击箭头。
         Box(
             modifier = Modifier
                 .fillMaxWidth()

@@ -3,9 +3,9 @@ package org.muc.ui.selection
 import androidx.compose.runtime.Immutable
 
 /**
- * Универсальное состояние множественного выбора элементов списка.
+ * 通用的列表项多选状态。
  *
- * Используется в desktop-экранах с паттерном:
+ * 用于采用以下交互模式的桌面端界面：
  * - click: single select;
  * - Shift+click: range select;
  * - Ctrl/Cmd+click: toggle item.
@@ -17,10 +17,9 @@ data class MoldMultiSelectionState<T>(
 )
 
 /**
- * Оставляет в состоянии выбора только элементы, которые присутствуют в [visibleIds].
+ * 仅保留 [visibleIds] 中存在的选中项。
  *
- * Нужен после фильтрации/обновления списка, чтобы не хранить «битые» ссылки
- * на уже невидимые строки.
+ * 在筛选或更新列表后调用，避免保留指向已不可见行的无效引用。
  */
 fun <T> MoldMultiSelectionState<T>.retainVisible(
     visibleIds: Collection<T>,
@@ -32,12 +31,12 @@ fun <T> MoldMultiSelectionState<T>.retainVisible(
     return copy(selectedIds = normalizedSelection, anchorId = normalizedAnchor)
 }
 
-/** Сбросить выделение и anchor-строку. */
+/** 清除选中项和锚点行。 */
 fun <T> MoldMultiSelectionState<T>.clearSelection(): MoldMultiSelectionState<T> =
     if (selectedIds.isEmpty() && anchorId == null) this else MoldMultiSelectionState()
 
 /**
- * Выделить все строки из [visibleIds].
+ * 选中 [visibleIds] 中的所有行。
  */
 fun <T> MoldMultiSelectionState<T>.selectAll(
     visibleIds: List<T>,
@@ -50,12 +49,12 @@ fun <T> MoldMultiSelectionState<T>.selectAll(
 }
 
 /**
- * Применяет пользовательское действие выбора строки.
+ * 应用用户的行选择操作。
  *
- * @param itemId Id строки, по которой кликнули.
- * @param visibleIds Идентификаторы строк в текущем визуальном порядке.
- * @param additiveSelection true для Ctrl/Cmd+Click.
- * @param rangeSelection true для Shift+Click.
+ * @param itemId 被点击行的 ID。
+ * @param visibleIds 按当前显示顺序排列的行 ID。
+ * @param additiveSelection 使用 Ctrl/Cmd+Click 时为 true。
+ * @param rangeSelection 使用 Shift+Click 时为 true。
  */
 fun <T> MoldMultiSelectionState<T>.onItemSelectionRequested(
     itemId: T,

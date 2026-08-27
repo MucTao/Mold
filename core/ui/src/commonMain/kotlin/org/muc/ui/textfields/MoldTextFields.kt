@@ -39,28 +39,28 @@ import org.muc.ui.design.MoldGreen
 import org.muc.ui.design.MoldRed
 
 /**
- * Универсальное текстовое поле с заливкой.
+ * 通用的填充样式文本输入框。
  *
- * Имеет единый API с [MoldOutlinedTextField] и [MoldPlainTextField], чтобы стиль
- * можно было менять без изменения остальной логики.
+ * 与 [MoldOutlinedTextField] 和 [MoldPlainTextField] 使用统一 API，
+ * 以便在不修改其余逻辑的情况下切换样式。
  *
- * @param value Текущее текстовое значение.
- * @param onValueChange Callback изменения текста.
- * @param modifier Modifier контейнера.
- * @param placeholder Текст placeholder. Показывается, когда [value] пустой.
- * @param type Цветовой тип поля (`NEUTRAL/DANGER/SUCCESS`).
- * @param size Размер поля.
- * @param cornerRadius Радиус скругления поля.
- * @param enabled Доступность поля.
- * @param readOnly Режим только для чтения.
- * @param singleLine Однострочный режим.
- * @param leadingIcon Иконка слева.
- * @param trailingIcon Иконка справа.
- * @param onTrailingIconClick Callback клика по правой иконке. Если `null`, иконка не кликабельна.
- * @param supportingText Дополнительный текст под полем (подсказка/ошибка).
- * @param visualTransformation Визуальная трансформация текста.
- * @param keyboardOptions Настройки клавиатуры.
- * @param keyboardActions Обработчики действий клавиатуры.
+ * @param value 当前文本值。
+ * @param onValueChange 文本变化回调。
+ * @param modifier 容器的 Modifier。
+ * @param placeholder 占位文本，在 [value] 为空时显示。
+ * @param type 输入框的颜色类型（`NEUTRAL/DANGER/SUCCESS`）。
+ * @param size 输入框尺寸。
+ * @param cornerRadius 输入框的圆角半径。
+ * @param enabled 输入框是否可用。
+ * @param readOnly 是否为只读模式。
+ * @param singleLine 是否为单行模式。
+ * @param leadingIcon 左侧图标。
+ * @param trailingIcon 右侧图标。
+ * @param onTrailingIconClick 右侧图标的点击回调。为 `null` 时图标不可点击。
+ * @param supportingText 输入框下方的附加文本（提示/错误）。
+ * @param visualTransformation 文本的视觉转换。
+ * @param keyboardOptions 键盘选项。
+ * @param keyboardActions 键盘操作处理器。
  */
 @Composable
 fun MoldFilledTextField(
@@ -105,9 +105,9 @@ fun MoldFilledTextField(
 }
 
 /**
- * Универсальное текстовое поле с обводкой.
+ * 通用的轮廓样式文本输入框。
  *
- * API идентичен [MoldFilledTextField] и [MoldPlainTextField].
+ * API 与 [MoldFilledTextField] 和 [MoldPlainTextField] 相同。
  */
 @Composable
 fun MoldOutlinedTextField(
@@ -152,9 +152,9 @@ fun MoldOutlinedTextField(
 }
 
 /**
- * Универсальное «плоское» текстовое поле без заливки и обводки.
+ * 通用的 `plain` 样式文本输入框，无填充和轮廓。
  *
- * API идентичен [MoldFilledTextField] и [MoldOutlinedTextField].
+ * API 与 [MoldFilledTextField] 和 [MoldOutlinedTextField] 相同。
  */
 @Composable
 fun MoldPlainTextField(
