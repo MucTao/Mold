@@ -272,12 +272,17 @@ private fun MoldBannerPreviewContent(isDarkTheme: Boolean) {
                 )
                 MoldBanner(
                     message = "不含关闭按钮的横幅",
-                    type = MoldBannerType.INFO,
+                    type = MoldBannerType.NORMAL,
+                )
+                MoldBanner(
+                    message = "不含关闭按钮的横幅",
+                    type = MoldBannerType.PRIMARY,
                 )
             }
         }
     }
 }
+
 @Preview
 @Composable
 fun MoldBannerLightPreview() {

@@ -29,7 +29,7 @@ fun MoldImage(
     icon: ImageVector = Icons.Outlined.Image,
     contentScale: ContentScale = ContentScale.Fit,
     contentDescription: String? = model?.toString(),
-    onSuccess: (ImageBitmap?, Color?) -> Unit
+    onSuccess: ((ImageBitmap?, Color?) -> Unit)? = null
 ) {
     if (model == null) {
         ErrorPlaceholder(modifier, icon, null)
@@ -46,9 +46,11 @@ fun MoldImage(
             LoadingView("图片加载中", Modifier.fillMaxSize().background(MoldTheme.colorScheme.surfaceVariant))
         },
         onSuccess = { state ->
-            val bitmap = state.result.image.toImageBitmap()
-            val suitableColors = bitmap?.themeColorOrNull()
-            onSuccess(bitmap, suitableColors)
+            onSuccess?.let {
+                val bitmap = state.result.image.toImageBitmap()
+                val suitableColors = bitmap?.themeColorOrNull()
+                it(bitmap, suitableColors)
+            }
         },
         contentScale = contentScale
     )

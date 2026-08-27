@@ -29,15 +29,11 @@ import androidx.compose.ui.window.DialogProperties
 import org.jetbrains.compose.resources.stringResource
 import org.muc.ui.alertdialogs.MoldAlertDialog
 import org.muc.ui.alertdialogs.MoldAlertDialogAction
-import org.muc.ui.banner.MoldBanner
-import org.muc.ui.banner.MoldBannerType
 import org.muc.ui.buttons.MoldButtonSize
 import org.muc.ui.buttons.MoldButtonType
 import org.muc.ui.buttons.MoldFilledButton
 import org.muc.ui.buttons.MoldOutlinedButton
 import org.muc.ui.design.Dimensions
-import org.muc.ui.design.MoldTheme
-import org.muc.ui.design.adaptive.WindowWidthType
 import org.muc.ui.i18n.MoldCommonStringRes
 
 sealed class Action(open val msg: @Composable () -> String) {
@@ -130,16 +126,6 @@ sealed class Action(open val msg: @Composable () -> String) {
     }
 }
 
-sealed class ActionFeedback(open val msg: @Composable () -> String?, open val type: MoldBannerType) {
-    data class ActionSuccess(override val msg: @Composable () -> String) : ActionFeedback(msg, MoldBannerType.SUCCESS) {
-        constructor(msg: String) : this({ msg })
-    }
-
-    data class ActionError(override val msg: @Composable () -> String?) : ActionFeedback(msg, MoldBannerType.ERROR) {
-        constructor(msg: String?) : this({ msg })
-    }
-}
-
 interface ActionContentScope<T> {
     var data: T?
     var errorMsg: String?
@@ -148,7 +134,6 @@ interface ActionContentScope<T> {
 data class BaseActionState(
     val isActionRunning: Boolean = false,
     val action: Action? = null,
-    val feedback: ActionFeedback? = null
 )
 
 @Composable
@@ -209,29 +194,6 @@ fun ActionView(actionManager: ActionManager) {
             )
 
         null -> {}
-    }
-
-    state.feedback?.let { feedback ->
-        val windowWidthType = MoldTheme.windowWidthType
-        MoldBanner(
-            message = when (feedback) {
-                is ActionFeedback.ActionError -> {
-                    val details = feedback.msg().orEmpty().trim()
-                    if (details.isNotEmpty()) {
-                        stringResource(MoldCommonStringRes.errorWithDetails, details)    // 带详情的错误提示
-                    } else {
-                        stringResource(MoldCommonStringRes.errorUnknown)                 // 未知错误提示
-                    }
-                }
-
-                is ActionFeedback.ActionSuccess -> feedback.msg()
-            },
-            type = feedback.type,
-            onDismiss = actionManager::onCancelAction,
-            alignment = Alignment.BottomEnd,
-            modifier = Modifier.fillMaxWidth(if (windowWidthType == WindowWidthType.EXPANDED) .6f else .9f)
-                .padding(Dimensions.paddingDefault),
-        )
     }
 }
 
@@ -360,7 +322,7 @@ private fun <E> ActionRequestDialog(
                     onClick = actionManager::onCancelAction,
                     text = stringResource(MoldCommonStringRes.actionCancel),
                     size = MoldButtonSize.MEDIUM,
-                    )
+                )
                 val onConfirmAction = action.onConfirmAction
                 MoldFilledButton(
                     onClick = {

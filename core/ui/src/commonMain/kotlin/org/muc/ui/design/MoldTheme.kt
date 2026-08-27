@@ -1,15 +1,27 @@
 package org.muc.ui.design
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
+import androidx.compose.material3.Surface
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.BiasAlignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.materialkolor.rememberDynamicColorScheme
+import org.muc.ui.action.feedback.SnackBar
+import org.muc.ui.action.feedback.SnackBarHost
+import org.muc.ui.action.feedback.SnackbarData
+import org.muc.ui.action.feedback.ToastData
+import org.muc.ui.action.feedback.ToastHost
+import org.muc.ui.action.feedback.ToastItem
 import org.muc.ui.design.adaptive.LocalWindowWidthType
 import org.muc.ui.design.adaptive.windowWidthType
 
@@ -40,19 +52,31 @@ fun MoldTheme(
     seedColor: Color = MoldBlue,
     isDynamic: Boolean? = null,
     isDarkTheme: Boolean = isSystemInDarkTheme(),
+    toastAlignment: Alignment = BiasAlignment(0f, .7f),
+    toastContent: @Composable (ToastData) -> Unit = { ToastItem(it) },
+    snackbarAlignment: Alignment = Alignment.BottomEnd,
+    snackbarContent: @Composable (SnackbarData) -> Unit = { SnackBar(contentAlignment = snackbarAlignment, bar = it) },
     content: @Composable () -> Unit,
 ) {
     val dynamicColor = if (isDynamic == true) dynamicColor(isDarkTheme) else null
     val semanticColors = if (isDarkTheme) DarkMoldSemanticColors else LightMoldSemanticColors
     val windowAdaptiveInfo = currentWindowAdaptiveInfoV2()
     CompositionLocalProvider(
-        LocalMoldSemanticColors provides semanticColors, LocalWindowWidthType provides windowAdaptiveInfo.windowSizeClass.windowWidthType()
+        LocalMoldSemanticColors provides semanticColors,
+        LocalWindowWidthType provides windowAdaptiveInfo.windowSizeClass.windowWidthType(),
     ) {
         MaterialTheme(
             colorScheme = dynamicColor ?: rememberDynamicColorScheme(seedColor = seedColor, isDark = isDarkTheme),
             typography = MoldTypography,
             shapes = MoldDeckShapes,
-            content = content,
-        )
+        ) {
+            Surface(Modifier.fillMaxSize()) {
+                Box(Modifier.fillMaxSize()) {
+                    content()
+                    ToastHost(contentAlignment = toastAlignment, content = toastContent)
+                    SnackBarHost(contentAlignment = snackbarAlignment, content = snackbarContent)
+                }
+            }
+        }
     }
 }

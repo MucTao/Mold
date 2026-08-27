@@ -16,3 +16,13 @@ tasks.withType<AbstractCompile>().configureEach {
         outputDir.mkdirs()
     }
 }
+tasks.register("publishAllCore") {
+    group = "publishing"
+    description = "Publish all core modules to Maven"
+
+    subprojects.forEach { sub ->
+        sub.plugins.withId("maven-publish") {
+            dependsOn(sub.tasks.named("publishAllPublicationsToMavenRepository"))
+        }
+    }
+}
