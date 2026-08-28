@@ -1,11 +1,11 @@
 package org.muc.ui.action.feedback
 
-import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import kotlinx.coroutines.delay
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
+import kotlin.uuid.Uuid
 
 enum class FeedBackType { PRIMARY, INFO, SUCCESS, ERROR, WARNING }
 
@@ -13,7 +13,8 @@ enum class FeedBackType { PRIMARY, INFO, SUCCESS, ERROR, WARNING }
 data class ToastData(
     val message: String,
     val type: FeedBackType = FeedBackType.INFO,
-    val duration: Duration = 2.seconds
+    val duration: Duration = 2.seconds,
+    internal val id: String = Uuid.random().toString(),
 )
 
 // ========== Snackbar（可交互反馈）==========
@@ -42,7 +43,7 @@ object FeedbackManager {
 
     internal suspend fun removeToastAfterDelay(toast: ToastData) {
         delay(toast.duration)
-        toasts.remove(toast)
+        toasts.removeAll { it.id == toast.id }
     }
 
     fun showSnackbar(

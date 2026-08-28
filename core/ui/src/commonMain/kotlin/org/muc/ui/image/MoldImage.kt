@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.BrokenImage
 import androidx.compose.material.icons.outlined.Image
-import androidx.compose.material.icons.outlined.ImageSearch
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,7 +33,7 @@ private val cacheMap = HashMap<Any, Color>()
 fun MoldImage(
     model: Any?,
     modifier: Modifier = Modifier,
-    icon: ImageVector = Icons.Outlined.Image,
+    icon: ImageVector = Icons.Outlined.BrokenImage,
     contentScale: ContentScale = ContentScale.Fit,
     contentDescription: String? = model?.toString(),
     colorFilter: ColorFilter? = null,
@@ -46,7 +46,7 @@ fun MoldImage(
     AsyncImage(
         model = model,
         contentDescription = contentDescription,
-        placeholder = rememberVectorPainter(Icons.Outlined.ImageSearch),
+        placeholder = rememberVectorPainter(Icons.Outlined.Image),
         error = rememberVectorPainter(icon),
         onSuccess = { state ->
             onSeedColor?.let { callback ->

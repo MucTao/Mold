@@ -39,7 +39,7 @@ internal fun ToastHost(
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             FeedbackManager.toasts.forEach { toast ->
-                key(toast) {
+                key(toast.id) {
                     LaunchedEffect(toast) { FeedbackManager.removeToastAfterDelay(toast) }
                     content(toast)
                 }
