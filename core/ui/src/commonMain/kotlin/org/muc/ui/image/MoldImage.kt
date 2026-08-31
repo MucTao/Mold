@@ -11,6 +11,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,6 +24,9 @@ import coil3.compose.AsyncImage
 import coil3.compose.AsyncImagePainter.State
 import coil3.compose.SubcomposeAsyncImage
 import com.materialkolor.ktx.themeColorOrNull
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.launch
 import org.muc.ui.design.Dimensions
 import org.muc.ui.design.MoldTheme
 import org.muc.ui.status.LoadingView
@@ -43,6 +47,7 @@ fun MoldImage(
         ErrorPlaceholder(modifier, icon, null)
         return
     }
+    val scope = rememberCoroutineScope()
     AsyncImage(
         model = model,
         contentDescription = contentDescription,
@@ -50,9 +55,11 @@ fun MoldImage(
         error = rememberVectorPainter(icon),
         onSuccess = { state ->
             onSeedColor?.let { callback ->
-                callback(cacheMap[model] ?: state.result.image.toImageBitmap()?.themeColorOrNull()?.also {
-                    cacheMap[model] = it
-                })
+                scope.launch(Dispatchers.IO) {
+                    callback(cacheMap[model] ?: state.result.image.toImageBitmap()?.themeColorOrNull()?.also {
+                        cacheMap[model] = it
+                    })
+                }
             }
         },
         colorFilter = colorFilter,
@@ -75,6 +82,7 @@ fun MoldSubImage(
         ErrorPlaceholder(modifier, icon, null)
         return
     }
+    val scope = rememberCoroutineScope()
     SubcomposeAsyncImage(
         model = model,
         contentDescription = contentDescription,
@@ -87,9 +95,11 @@ fun MoldSubImage(
         },
         onSuccess = { state ->
             onSeedColor?.let { callback ->
-                callback(cacheMap[model] ?: state.result.image.toImageBitmap()?.themeColorOrNull()?.also {
-                    cacheMap[model] = it
-                })
+                scope.launch(Dispatchers.IO) {
+                    callback(cacheMap[model] ?: state.result.image.toImageBitmap()?.themeColorOrNull()?.also {
+                        cacheMap[model] = it
+                    })
+                }
             }
         },
         transform = {

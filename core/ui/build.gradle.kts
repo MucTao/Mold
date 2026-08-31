@@ -66,6 +66,10 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.compose.uiTooling)
             implementation(libs.slf4j.simple)
+            implementation(libs.androidx.camera.core)
+            implementation(libs.androidx.camera.lifecycle)
+            implementation(libs.androidx.camera.view)
+            implementation(libs.androidx.camera.video)
         }
         if (!isJitpack) {
             jvmMain.dependencies {
