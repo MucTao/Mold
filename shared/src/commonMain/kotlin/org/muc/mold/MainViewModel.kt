@@ -26,6 +26,7 @@ import org.muc.ui.action.ActionManagerImpl
 import org.muc.ui.action.ActionView
 import org.muc.ui.buttons.MoldButtonType
 import org.muc.ui.image.MoldImage
+import org.muc.ui.textfields.MoldOutlinedTextField
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -79,8 +80,12 @@ class MainViewModel : ViewModel() {
                     }) {
                         ActionView(manager)
                     },
-                    InfoData.InfoItemData("image") {
+                    InfoData.InfoItemData("Image") {
                         MoldImage("https://saas.jf-r.com/pcweb/img/t1_1.png")
+                    },
+                    InfoData.InfoItemData("TextField") {
+                        var value by remember { mutableStateOf("") }
+                        MoldOutlinedTextField(value, { value = it })
                     }
                 )
             )
