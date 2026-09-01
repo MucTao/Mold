@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
@@ -32,6 +33,8 @@ interface DataKVDelegate<V> {
     val flow: Flow<V>
 
     suspend fun getValue() : V
+
+    val value: V get() = runBlocking { getValue() }
 
     val expireTimeFlow: StateFlow<Long>
     val expireTime: Long get() = expireTimeFlow.value
