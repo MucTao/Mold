@@ -63,6 +63,7 @@ kotlin {
             implementation(project(":core:eventBus"))
             implementation(project(":core:dataKV"))
             implementation(project(":core:ui"))
+            implementation(project(":core:utils"))
 
         }
     }

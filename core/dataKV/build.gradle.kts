@@ -9,8 +9,9 @@ plugins {
 
 
 kotlin {
+    val isOnlyAndroid = libs.versions.isOnlyAndroid.get().toBoolean()
     val isJitpack = System.getenv("JITPACK") == "true"
-    if (!isJitpack) {
+    if (!isJitpack && !isOnlyAndroid) {
         jvm()
         iosArm64()
         iosSimulatorArm64()
@@ -20,7 +21,7 @@ kotlin {
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.mold.minSdk.get().toInt()
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_1_8)
+            jvmTarget.set(JvmTarget.JVM_11)
         }
     }
     sourceSets {

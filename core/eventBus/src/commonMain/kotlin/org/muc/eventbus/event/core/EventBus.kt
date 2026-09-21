@@ -27,10 +27,12 @@ import kotlin.time.Duration.Companion.seconds
 
 val logger = KotlinLogging.logger {}   // 如果使用 Napier 可替换
 
-object EventBus {
+class EventBus {
     // ==================== 常量 ====================
-    private const val BUFFER_SIZE = 1024
-    private const val MAX_CACHE_PER_TYPE = 5
+    companion object {
+        private const val BUFFER_SIZE = 1024
+        private const val MAX_CACHE_PER_TYPE = 5
+    }
 
     // 优先级调度器（提供默认值，可通过 init() 覆盖）
     val dispatchers by lazy {

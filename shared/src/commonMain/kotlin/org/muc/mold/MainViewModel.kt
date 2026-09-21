@@ -15,7 +15,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.muc.datakv.IDataKVOwner
-import org.muc.datakv.content.EngineProvider
 import org.muc.datakv.datakv
 import org.muc.eventbus.event.AppEvent
 import org.muc.eventbus.event.core.EventBus
@@ -93,7 +92,7 @@ class MainViewModel : ViewModel() {
     }
 
     private fun loadDataKv() {
-        val store = object : IDataKVOwner by EngineProvider {
+        val store = object : IDataKVOwner {
             val testCount by datakv(0)
             val expireCount by datakv(0)
             val cpCountPt by datakv(0, cross = true)
@@ -137,18 +136,19 @@ class MainViewModel : ViewModel() {
     }
 
     private fun loadEventBus() {
+        val eventBus = EventBus()
         uiState.add(
             InfoData(
                 "EventBus", listOf(
                     InfoData.InfoItemData("发送事件", onClick = {
                         viewModelScope.launch {
-                            EventBus.send(TestEvent((1..100).random().toString()))
+                            eventBus.send(TestEvent((1..100).random().toString()))
                         }
                     }) {
                         var testEvent by remember {
                             mutableStateOf<TestEvent?>(null)
                         }
-                        EventBus.EventBusCollector<TestEvent> {
+                        eventBus.EventBusCollector<TestEvent> {
                             testEvent = it
                         }
                         if (testEvent != null)
@@ -162,14 +162,14 @@ class MainViewModel : ViewModel() {
                     },
                     InfoData.InfoItemData("发送粘性事件", onClick = {
                         viewModelScope.launch {
-                            EventBus.sendStackEvent(TestStackEvent((1..100).random().toString()))
+                            eventBus.sendStackEvent(TestStackEvent((1..100).random().toString()))
                         }
                     }) {
                         var testEvent by remember {
                             mutableStateOf<TestStackEvent?>(null)
                         }
                         Button({
-                            EventBus.subscribeSticky<TestStackEvent>(
+                            eventBus.subscribeSticky<TestStackEvent>(
                                 scope = viewModelScope,
                                 onEvent = { testEvent = it }
                             )

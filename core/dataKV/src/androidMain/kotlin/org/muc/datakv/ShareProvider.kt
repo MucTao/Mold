@@ -1,5 +1,6 @@
 package org.muc.datakv
 
+import android.app.Application
 import android.content.ContentProvider
 import android.content.ContentValues
 import android.content.Context
@@ -18,6 +19,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
+import org.muc.datakv.di.DataKV
 import org.muc.datakv.di.DataKV.valueChangeKeyFlow
 
 @Keep
@@ -64,7 +66,13 @@ class ShareProvider : ContentProvider() {
         }
     }
 
-    override fun onCreate(): Boolean = true
+    override fun onCreate(): Boolean {
+        val app = context?.applicationContext as? Application ?: return false
+        println("初始化:$app")
+        DataKV.setApp(app)
+        return true
+    }
+
     override fun getType(uri: Uri): String? {
         val matchCode = URI_MATCHER.match(uri)
         return if (matchCode == CODE_SINGLE_ITEM) "vnd.android.cursor.item/$AUTHORITY.$TABLE" else null

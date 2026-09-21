@@ -21,7 +21,9 @@ import kotlin.time.Duration.Companion.milliseconds
 object DataKV : DataContentEngine {
     private lateinit var _app: Application
     val app get() = _app
-
+    fun setApp(app: Application) {
+        this._app = app
+    }
     /**
      * @param authority :必须和AndroidManifest.xml 中注册的 authorities一致
      */

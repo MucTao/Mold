@@ -11,8 +11,9 @@ plugins {
 
 
 kotlin {
+    val isOnlyAndroid = libs.versions.isOnlyAndroid.get().toBoolean()
     val isJitpack = System.getenv("JITPACK") == "true"
-    if (!isJitpack) {
+    if (!isJitpack && !isOnlyAndroid) {
         jvm()
         iosArm64()
         iosSimulatorArm64()

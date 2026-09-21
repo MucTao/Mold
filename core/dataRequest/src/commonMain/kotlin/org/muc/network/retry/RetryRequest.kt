@@ -17,31 +17,52 @@ import org.muc.network.status.DataFlowEmpty
 import org.muc.network.status.DataFlowFail
 import org.muc.network.status.DataFlowLoading
 import org.muc.network.status.DataFlowResult
-import org.muc.network.status.DataFlowSuccess
+import org.muc.network.status.asDataFlowResult
 import kotlin.time.Duration.Companion.milliseconds
 
 
 interface RetryRequest {
     fun <T> refreshableRequest(
+        request: suspend () -> Flow<T>,
         trigger: Trigger = Trigger(), // 外部传入的触发器
-        request: suspend () -> Flow<T?>
     ): Flow<DataFlowResult<T>>
+
+    fun <T, R> refreshableRequest(
+        request: suspend () -> Flow<T>,
+        trigger: Trigger = Trigger(), // 外部传入的触发器
+        v2r: suspend T.(Trigger) -> DataFlowResult<R>
+    ): Flow<DataFlowResult<R>>
 }
 
+@OptIn(ExperimentalCoroutinesApi::class)
 object RetryRequestImpl : RetryRequest {
-    @OptIn(ExperimentalCoroutinesApi::class)
     override fun <T> refreshableRequest(
-        trigger: Trigger,
-        request: suspend () -> Flow<T?>
+        request: suspend () -> Flow<T>,
+        trigger: Trigger
     ): Flow<DataFlowResult<T>> = trigger.getRetryFlow()
         .flatMapLatest {
             val res: Flow<DataFlowResult<T>> = request()
-                .map { value ->
-                    when (value) {
-                        null -> DataFlowEmpty(trigger)
-                        is List<*> -> if (value.isEmpty()) DataFlowEmpty(trigger) else DataFlowSuccess(value, trigger)
-                        else -> DataFlowSuccess(value, trigger)
-                    }
+                .map { v ->
+                    v.asDataFlowResult(trigger)
+                }
+                .onStart { emit(DataFlowLoading(trigger)) }
+                .catch {
+                    if (it is NullPointerException) {
+                        emit(DataFlowEmpty(trigger))
+                    } else
+                        emit(DataFlowFail(it, trigger))
+                }
+            res
+        } //.distinctUntilChanged() 避免重复结果
+
+    override fun <T, R> refreshableRequest(
+        request: suspend () -> Flow<T>, trigger: Trigger,
+        v2r: suspend T.(Trigger) -> DataFlowResult<R>
+    ): Flow<DataFlowResult<R>> = trigger.getRetryFlow()
+        .flatMapLatest {
+            val res: Flow<DataFlowResult<R>> = request()
+                .map {
+                    v2r(it, trigger)
                 }
                 .onStart { emit(DataFlowLoading(trigger)) }
                 .catch {
@@ -56,19 +77,34 @@ object RetryRequestImpl : RetryRequest {
 
 interface ApiRequest : RetryRequest {
     fun <T> request(request: suspend () -> T): Flow<T?>
-    fun <T> reRequest(request: suspend () -> T?): Flow<DataFlowResult<T>>
+    fun <T> reRequest(
+        request: suspend () -> T,
+    ): Flow<DataFlowResult<T>>
+
+    fun <T, R> reRequest(
+        request: suspend () -> T,
+        v2r: suspend T.(Trigger) -> DataFlowResult<R>
+    ): Flow<DataFlowResult<R>>
 }
 
 object ApiRequestImpl : ApiRequest, RetryRequest by RetryRequestImpl {
-    override fun <T> request(request: suspend () -> T): Flow<T?> = flow { emit(request()) }
-        .retry()
-        .flowOn(Dispatchers.IO)
+    override fun <T> request(request: suspend () -> T): Flow<T> =
+        flow { emit(request()) }
+            .retry()
+            .flowOn(Dispatchers.IO)
 
-    override fun <T> reRequest(request: suspend () -> T?): Flow<DataFlowResult<T>> = refreshableRequest {
-        request {
-            request()
-        }
-    }
+    override fun <T> reRequest(request: suspend () -> T): Flow<DataFlowResult<T>> = refreshableRequest(request = {
+        request { request() }
+    })
+
+    override fun <T, R> reRequest(
+        request: suspend () -> T,
+        v2r: suspend T.(Trigger) -> DataFlowResult<R>
+    ): Flow<DataFlowResult<R>> =
+        refreshableRequest(
+            request = { request { request() } },
+            v2r = v2r
+        )
 }
 
 

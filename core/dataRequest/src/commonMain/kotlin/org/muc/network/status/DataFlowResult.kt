@@ -144,4 +144,12 @@ fun <T> Flow<Pair<Trigger, T?>>.asDataStatusResult(tigger: Trigger? = null): Flo
         }
 }
 
+fun <T> T?.asDataFlowResult(trigger: Trigger): DataFlowResult<T> {
+    return when (this) {
+        null -> DataFlowEmpty(trigger)
+        is List<*> if this.isEmpty() -> DataFlowEmpty(trigger)
+        else -> DataFlowSuccess(this,trigger)
+    }
+}
+
 

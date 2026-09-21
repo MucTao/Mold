@@ -72,17 +72,20 @@ inline fun <reified T> DataResult<T>.onFail(action: DataResult<T>.(cause: Throwa
     return this
 }
 
+fun <T> T?.asDataResult(): DataResult<T> {
+    return when (this) {
+        null -> DataEmpty()
+        is List<*> if this.isEmpty() -> DataEmpty()
+        else -> DataSuccess(this)
+    }
+}
 
-suspend inline fun <T> runCatchingSuspend2DataResult(
+suspend inline fun <T> runCatchingSuspendAsDataResult(
     crossinline block: suspend () -> T,
 ): DataResult<T> =
     withContext(Dispatchers.IO) {
         try {
-            when (val res = block()) {
-                null -> DataEmpty()
-                is List<*> if res.isEmpty() -> DataEmpty()
-                else -> DataSuccess(res)
-            }
+            block().asDataResult()
         } catch (e: CancellationException) {
             DataFail(e)
         } catch (e: Throwable) {//TODO 处理外层HttpCode等于200 内层code!=$code的情况
@@ -91,15 +94,38 @@ suspend inline fun <T> runCatchingSuspend2DataResult(
     }
 
 
-inline fun <T> runCatching2DataResult(
+suspend inline fun <T, R> runCatchingSuspendAsDataResult(
+    crossinline block: suspend () -> T,
+    crossinline v2r: suspend (T) -> DataResult<R>,
+): DataResult<R> =
+    withContext(Dispatchers.IO) {
+        try {
+            val res = block()
+            v2r(res)
+        } catch (e: CancellationException) {
+            DataFail(e)
+        } catch (e: Throwable) {//TODO 处理外层HttpCode等于200 内层code!=$code的情况
+            DataFail(e)
+        }
+    }
+
+inline fun <T> runCatchingAsDataResult(
     crossinline block: () -> T,
 ): DataResult<T> =
     try {
-        when (val res = block()) {
-            null -> DataEmpty()
-            is List<*> if res.isEmpty() -> DataEmpty()
-            else -> DataSuccess(res)
-        }
+        block().asDataResult()
+    } catch (e: CancellationException) {
+        DataFail(e)
+    } catch (e: Throwable) {//TODO 处理外层HttpCode等于200 内层code!=$code的情况
+        DataFail(e)
+    }
+
+inline fun <T, R> runCatchingAsDataResult(
+    crossinline block: () -> T,
+    crossinline v2r: (T) -> DataResult<R>,
+): DataResult<R> =
+    try {
+        v2r(block())
     } catch (e: CancellationException) {
         DataFail(e)
     } catch (e: Throwable) {//TODO 处理外层HttpCode等于200 内层code!=$code的情况
