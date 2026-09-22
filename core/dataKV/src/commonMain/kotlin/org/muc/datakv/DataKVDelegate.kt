@@ -4,7 +4,6 @@ package org.muc.datakv
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -32,7 +31,7 @@ interface DataKVDelegate<V> {
 
     val flow: Flow<V>
 
-    suspend fun getValue() : V
+    suspend fun getValue(): V
 
     val value: V get() = runBlocking { getValue() }
 
