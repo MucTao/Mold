@@ -20,6 +20,14 @@ kotlin {
         namespace = "org.muc.mold.dataRequest"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.mold.minSdk.get().toInt()
+        withHostTest {
+            isIncludeAndroidResources = true
+        }
+        withDeviceTestBuilder {
+            sourceSetTreeName = "test"
+        }.configure {
+            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        }
     }
     sourceSets {
         commonMain.dependencies {
@@ -39,7 +47,7 @@ kotlin {
             implementation(libs.slf4j.simple)
             implementation(libs.ktor.client.okhttp)
         }
-        if (!isJitpack) {
+        if (!isJitpack && !isOnlyAndroid) {
             jvmMain.dependencies {
                 implementation(libs.slf4j.simple)
                 implementation(libs.ktor.client.cio)

@@ -86,9 +86,7 @@ object NetworkUtils {
 
 
     /**
-     * 监听网络状态变化（替代原来的 [registerNetworkStatusChangedListener] /
-     * [unregisterNetworkStatusChangedListener]）。
-     *
+     * 监听网络状态变化（
      * - 首次订阅立即发射当前网络类型
      * - 之后收到 `CONNECTIVITY_ACTION` 广播后 1s 防抖，类型变化才发射
      * - 协程取消时自动 unregisterReceiver，不再需要手动反注册
@@ -263,7 +261,7 @@ object NetworkUtils {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             info.isAvailable && info.subtype == TelephonyManager.NETWORK_TYPE_NR
         } else {
-           false
+            false
         }
     }
 
@@ -351,9 +349,9 @@ object NetworkUtils {
 
                 else -> {
                     val subtypeName = info.subtypeName
-                    if (subtypeName.equals("TD-SCDMA", true) ||
-                        subtypeName.equals("WCDMA", true) ||
-                        subtypeName.equals("CDMA2000", true)
+                    if (subtypeName.equals("TD-SCDMA", true)
+                        || subtypeName.equals("WCDMA", true)
+                        || subtypeName.equals("CDMA2000", true)
                     ) NetworkType.NETWORK_3G
                     else NetworkType.NETWORK_UNKNOWN
                 }
@@ -374,8 +372,7 @@ object NetworkUtils {
     @get:RequiresPermission(ACCESS_NETWORK_STATE)
     private val activeNetworkInfo: NetworkInfo?
         get() {
-            val cm = Utils.app.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
-                ?: return null
+            val cm = Utils.app.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager ?: return null
             return cm.activeNetworkInfo
         }
 
@@ -497,8 +494,8 @@ object NetworkUtils {
             val wm = Utils.app.applicationContext
                 .getSystemService(Context.WIFI_SERVICE) as? WifiManager ?: return ""
             val wi = wm.connectionInfo ?: return ""
-            val ssid = wi.ssid ?: return ""
-            if (TextUtils.isEmpty(ssid)) return ""
+            val ssid = wi.ssid
+            if (ssid.isNullOrBlank()) return ""
             return if (ssid.length > 2 && ssid.first() == '"' && ssid.last() == '"') {
                 ssid.substring(1, ssid.length - 1)
             } else ssid
@@ -522,11 +519,9 @@ object NetworkUtils {
         }
 
     /**
-     * 周期性 WiFi 扫描结果流（替代 [addOnWifiChangedConsumer] /
-     * [removeOnWifiChangedConsumer]）。
-     *
+     * 周期性 WiFi 扫描结果流
      * - 首次立即发射一次（即使为空）
-     * - 之后每 [intervalMillis] 触发一次扫描，结果变化才发射
+     * - 之后每 [intervalDuration] 触发一次扫描，结果变化才发射
      * - 收集器取消时自动停止扫描（无需 Timer.cancel）
      */
     @RequiresPermission(allOf = [ACCESS_WIFI_STATE, CHANGE_WIFI_STATE, ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION])

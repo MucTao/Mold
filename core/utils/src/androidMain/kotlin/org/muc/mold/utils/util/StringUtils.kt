@@ -160,7 +160,7 @@ object StringUtils {
      * @param id The desired resource identifier.
      * @return the string value associated with a particular resource ID.
      */
-    fun getString(@StringRes id: Int): String? = getString(id, null)
+    fun getString(@StringRes id: Int): String = getString(id, null)
 
     /**
      * Return the string value associated with a particular resource ID.
@@ -169,10 +169,9 @@ object StringUtils {
      * @param formatArgs The format arguments that will be used for substitution.
      * @return the string value associated with a particular resource ID.
      */
-    fun getString(@StringRes id: Int, vararg formatArgs: Any?): String? = runCatching {
-        return format(Utils.app.getString(id), formatArgs)
-    }
-        .getOrElse { id.toString() }
+    fun getString(@StringRes id: Int, vararg formatArgs: Any?): String = runCatching {
+        format(Utils.app.getString(id), formatArgs)
+    }.getOrNull() ?: id.toString()
 
     /**
      * Return the string array associated with a particular resource ID.

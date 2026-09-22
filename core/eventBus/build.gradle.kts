@@ -23,6 +23,14 @@ kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
+        withHostTest {
+            isIncludeAndroidResources = true
+        }
+        withDeviceTestBuilder {
+            sourceSetTreeName = "test"
+        }.configure {
+            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        }
     }
     sourceSets {
         commonMain.dependencies {
@@ -34,7 +42,7 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.slf4j.simple)
         }
-        if (!isJitpack) {
+        if (!isJitpack && !isOnlyAndroid) {
             jvmMain.dependencies {
                 implementation(libs.slf4j.simple)
             }

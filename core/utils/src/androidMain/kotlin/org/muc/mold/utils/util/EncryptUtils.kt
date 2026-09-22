@@ -45,7 +45,7 @@ object EncryptUtils {
      *
      * @param data The data . @ return the hex string of MD2 encryption
      */
-    fun encryptMD2ToString(data: String?) = data?.toByteArray()?.md2()
+    fun encryptMD2ToString(data: String) = data.toByteArray().md2()
 
     /**
      * Return the hex string of MD2 encryption.
@@ -53,7 +53,7 @@ object EncryptUtils {
      * @param data The data.
      * @return the hex string of MD2 encryption
      */
-    fun encryptMD2ToString(data: ByteArray?) = data?.md2()
+    fun encryptMD2ToString(data: ByteArray) = data.md2()
 
 
     /**
@@ -62,7 +62,7 @@ object EncryptUtils {
      * @param data The data.
      * @return the hex string of MD5 encryption
      */
-    fun encryptMD5ToString(data: String?) = data?.toByteArray()?.md5()
+    fun encryptMD5ToString(data: String) = data.toByteArray().md5()
 
     /**
      * Return the hex string of MD5 encryption.
@@ -159,7 +159,7 @@ object EncryptUtils {
      * @param data The data.
      * @return the hex string of SHA1 encryption
      */
-    fun encryptSHA1ToString(data: String?) = data?.toByteArray()?.sha1()
+    fun encryptSHA1ToString(data: String) = data.toByteArray().sha1()
 
     /**
      * Return the hex string of SHA224 encryption.
@@ -167,7 +167,7 @@ object EncryptUtils {
      * @param data The data.
      * @return the hex string of SHA224 encryption
      */
-    fun encryptSHA224ToString(data: String?) = data?.toByteArray()?.sha224()
+    fun encryptSHA224ToString(data: String) = data.toByteArray().sha224()
 
     /**
      * Return the hex string of SHA256 encryption.
@@ -175,7 +175,7 @@ object EncryptUtils {
      * @param data The data.
      * @return the hex string of SHA256 encryption
      */
-    fun encryptSHA256ToString(data: String?) = data?.toByteArray()?.sha256()
+    fun encryptSHA256ToString(data: String) = data.toByteArray().sha256()
 
 
     /**
@@ -184,7 +184,7 @@ object EncryptUtils {
      * @param data The data.
      * @return the hex string of SHA384 encryption
      */
-    fun encryptSHA384ToString(data: String?) = data?.toByteArray()?.sha384()
+    fun encryptSHA384ToString(data: String) = data.toByteArray().sha384()
 
 
     /**
@@ -193,7 +193,7 @@ object EncryptUtils {
      * @param data The data.
      * @return the hex string of SHA512 encryption
      */
-    fun encryptSHA512ToString(data: String?) = data?.toByteArray()?.sha512()
+    fun encryptSHA512ToString(data: String) = data.toByteArray().sha512()
 
 
     /**/

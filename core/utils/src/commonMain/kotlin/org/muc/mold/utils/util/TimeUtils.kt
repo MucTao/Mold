@@ -39,7 +39,22 @@ import kotlin.time.Instant
  * 原始作者：Muc
  * 优化：java.time → kotlinx.datetime、Thread → 协程、runCatching → Result、格式字符串 → Builder DSL
  */
+
+internal expect fun getUsingNetworkTime(): Boolean
+internal expect fun setUsingNetworkTime(use: Boolean)
+
 object TimeUtils {
+    /**
+     * 检查设备是否正在使用网络提供的时间。
+     * 在您想验证设备是否设置了正确的时间以避免欺诈的情况下，
+     * 或者如果您想防止用户篡改时间并滥用您的“一次性”和“到期”功能，则非常有用。
+     * @return {@code true}: yes<br>{@code false}: no
+     */
+    var isUsingNetworkProvidedTime
+        get() = getUsingNetworkTime()
+        set(value) {
+            setUsingNetworkTime(value)
+        }
 
     // ──────────────────────────────────────────────
     // 常量

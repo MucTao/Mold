@@ -72,7 +72,7 @@ kotlin {
             implementation(libs.androidx.camera.view)
             implementation(libs.androidx.camera.video)
         }
-        if (!isJitpack) {
+        if (!isJitpack && !isOnlyAndroid) {
             jvmMain.dependencies {
                 implementation(libs.slf4j.simple)
                 implementation(libs.ktor.client.cio)
